@@ -16,15 +16,24 @@ note['status'] = input("Введите статус заметки (Активн
 note['created_date'] = input("Введите дату создания заметки (день.месяц.год): ").split(sep='.', maxsplit=-1)
 note['issue_date'] = input("Введите дату истечения заметки (день.месяц.год): ").split(sep='.', maxsplit=-1)
 
+# Создания словаря для вывода полей на русском
+note_print ={'username': "Имя пользователя",
+             'titles': "Заголовки",
+             'content': "Описание",
+             'status': "Статус",
+             'created_date': 'Дата создания',
+             'issue_date': 'Дата истечения'
+             }
+
 # Вывод введенных данных
 print("\n   Новая заметка!")
 for key, value in note.items():
     if key == "titles":
-        print(f"{key.capitalize()}:", ", ".join(value))
+        print(f"{note_print[key]}:", ", ".join(value))
     elif key == "created_date" or key == "issue_date":
-        print(f"{key.capitalize()}:", '.'.join(value[:2]) )
+        print(f"{note_print[key]}:", '.'.join(value[:2]) )
     else:
-        print(f"{key.capitalize()}: {value.capitalize()}")
+        print(f"{note_print[key]}: {value.capitalize()}")
 
 # Подтверждение данных
 input("\nНажмите Enter для подтверждения")
