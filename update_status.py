@@ -1,5 +1,5 @@
-#Переменная для статуса
-status = "Отложено"
+#Словарь с элементом "статус"
+note = {"status":"Отложено"}
 
 # Словарь для значений статуса
 choice_status = {"1":"Выполнено",
@@ -8,7 +8,7 @@ choice_status = {"1":"Выполнено",
                  }
 
 # Вывод текущего статуса
-print("Текущий статус заметки:", status)
+print("Текущий статус заметки:", note["status"])
 
 # Цикл изменения статуса
 while True:
@@ -22,8 +22,8 @@ while True:
 
            if new_status in choice_status.keys():
                # Изменение и вывод нового статуса
-               status = choice_status[new_status]
-               print(f"Статус успешно обновлен на: {status}")
+               note["status"] = choice_status[new_status]
+               print(f"Статус успешно обновлен на: {note["status"]}")
                #Выход из второго цикла
                break
            else:
