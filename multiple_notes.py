@@ -148,7 +148,7 @@ def output_notes(_notes):
                 elif key == "ID":
                     continue
                 else:
-                    print(f"{note_print[key]}: {value.capitalize()}")
+                    print(f"{note_print[key]}: {value}")
 
 # Функция для создания заметок
 def can_give(_notes):
