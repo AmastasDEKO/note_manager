@@ -61,7 +61,7 @@ def create_note():
         else:
             titles_set.add(title)
             
-    # Функция для ввода описания
+    # Ввода описания
     while True:
         content = input("Введите описание заметки: ").strip().lower()
         # Проверка на пустой ввод
