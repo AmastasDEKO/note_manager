@@ -42,7 +42,7 @@ def create_note():
             break
         else:
             print("Пожалуйста заполните имя пользователя.")
-            break
+
             
     # Ввод заголовков
     titles_set = set()
