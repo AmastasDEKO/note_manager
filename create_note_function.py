@@ -141,7 +141,7 @@ def create_note():
                         issue_date_input[2] = "20" + issue_date_input[2]
 
                     # Добавление в словарь с преобразованием списка в дату
-                    new_note.update({"issue_date": date(
+                    new_note.update({"issue_date": datetime(
                         int(issue_date_input[2]),
                         int(issue_date_input[1]),
                         int(issue_date_input[0]))
