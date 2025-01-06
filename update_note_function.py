@@ -7,7 +7,7 @@
 """
 
 # Подключение формата даты
-from datetime import datetime, date
+from datetime import datetime
 
 # Пример готовой записки
 note = {'username': "роман",
