@@ -7,7 +7,7 @@
 """
 
 # Подключение формата даты
-from datetime import datetime, date
+from datetime import datetime
 # Функция вывода данных о заметке
 def output_notes(note):
     # Создания словаря для вывода полей на русском
