@@ -21,13 +21,13 @@ def output_notes(note):
 
     for key, value in note.items():
         if key == "titles":
-            print(f"{note_print[key]}:", ", ".join(value))
+            print(f"{note_print[key]}:", ", ".join(value.capitalize()))
         elif key == "created_date" or key == "issue_date":
             splitting = str(value).split()
             splitting = splitting[0].split(sep="-", maxsplit=-1)
             print(f"{note_print[key]}:", '.'.join(splitting[:0:-1]))
         else:
-            print(f"{note_print[key]}: {value}")
+            print(f"{note_print[key]}: {value.capitalize()}")
 
 # Функция для создания заметок
 def create_note():
@@ -35,7 +35,7 @@ def create_note():
     print("Введите информацию о новой заметке")
     # Ввод имени пользователя
     while True:
-        username = input("Введите имя пользователя: ").strip().capitalize()
+        username = input("Введите имя пользователя: ").strip().lower()
         # Проверка на пустой ввод
         if username != "":
             new_note.update({"username": username})
@@ -63,7 +63,7 @@ def create_note():
             
     # Функция для ввода описания
     while True:
-        content = input("Введите описание заметки: ").strip().capitalize()
+        content = input("Введите описание заметки: ").strip().lower()
         # Проверка на пустой ввод
         if content != "":
             new_note.update({"content": content})
@@ -74,13 +74,13 @@ def create_note():
     # Выбор статуса
     while True:
         # Словарь значений статуса
-        choice_status = {"1": "Выполнено",
-                         "2": "В процессе",
-                         "3": "Новая"
+        choice_status = {"1": "выполнено",
+                         "2": "в процессе",
+                         "3": "новая"
                         }
         # Ввод нового статуса и проверка корректности ввода
         new_status = input(
-            "Введите статус:\n1. Выполнено\n2. В процессе\n3. Новая\nВвод: ").strip().capitalize()
+            "Введите статус:\n1. Выполнено\n2. В процессе\n3. Новая\nВвод: ").strip().lower()
         # Проверка по ключу(цифре)
         if new_status in choice_status.keys():
             # Сохранение статуса
@@ -133,8 +133,8 @@ def create_note():
             break
         elif auto_date == "нет":
             while True:
-                issue_date_input = input("Введите дату дедлайн в формате (день.месяц.год): ").split(sep=".",
-                                                                                                    maxsplit=-1)
+                issue_date_input = input("Введите дату дедлайн в формате (день.месяц.год): "
+                                        ).split(sep=".",maxsplit=-1)
                 try:
                     # Приведение года в формат "20__"
                     if len(issue_date_input[2]) == 2:
