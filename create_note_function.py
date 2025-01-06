@@ -21,7 +21,7 @@ def output_notes(note):
 
     for key, value in note.items():
         if key == "titles":
-            print(f"{note_print[key]}:", ", ".join(value.capitalize()))
+            print(f"{note_print[key]}:", ", ".join(value).capitalize())
         elif key == "created_date" or key == "issue_date":
             splitting = str(value).split()
             splitting = splitting[0].split(sep="-", maxsplit=-1)
