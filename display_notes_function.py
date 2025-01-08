@@ -132,10 +132,8 @@ def display_notes(_notes):
                 print(f"Заметка №{i + 1}")
                 for key, value in note.items():
                     if key == "titles":
-                        for j in range(len(value)):
-                            value[j] = value[j].capitalize()
                             # Меняем цвет заголовков на яркий жёлтый
-                        print(f"{note_print[key]}: {Fore.YELLOW+Style.BRIGHT+", ".join(value)}")
+                        print(f"{note_print[key]}: {Fore.YELLOW+Style.BRIGHT+", ".join(value).title()}")
                 else:
                     print("---------------")
             else:
@@ -154,9 +152,7 @@ def display_notes(_notes):
                 print(f"Заметка №{i + 1}")
                 for key, value in note.items():
                     if key == "titles":
-                        for j in range(len(value)):
-                            value[j] = value[j].capitalize()
-                        print(f"{note_print[key]}: {", ".join(value)}")
+                        print(f"{note_print[key]}: {", ".join(value).title()}")
                     elif key == "created_date" or key == "issue_date":
                         splitting = str(value).split()
                         splitting = splitting[0].split(sep="-", maxsplit=-1)
@@ -185,9 +181,7 @@ def display_notes(_notes):
                 print(f"Заметка №{i + 1}")
                 for key, value in note.items():
                     if key == "titles":
-                        for j in range(len(value)):
-                            value[j] = value[j].capitalize()
-                        print(f"{note_print[key]}: {", ".join(value)}")
+                        print(f"{note_print[key]}: {", ".join(value).title()}")
                     elif key == "created_date" or key == "issue_date":
                         splitting = str(value).split()
                         splitting = splitting[0].split(sep="-", maxsplit=-1)
@@ -215,9 +209,7 @@ def display_notes(_notes):
                 # Цикл форматирования значений и добавления их в список
                 for key, value in note.items():
                     if key == "titles":
-                        for j in range(len(value)):
-                            value[j] = value[j].capitalize()
-                        note_list.append(", ".join(value))
+                        note_list.append(", ".join(value).title())
                     elif key == "created_date" or key == "issue_date":
                         splitting = str(value).split()
                         splitting = splitting[0].split(sep="-", maxsplit=-1)
@@ -242,9 +234,7 @@ def display_notes(_notes):
                 print(f"Заметка №{i+1}")
                 for key, value in note.items():
                     if key == "titles":
-                        for j in range(len(value)):
-                            value[j] = value[j].capitalize()
-                        print(f"{note_print[key]}: {", ".join(value)}")
+                        print(f"{note_print[key]}: {", ".join(value).title()}")
                     elif key == "created_date" or key == "issue_date":
                         splitting = str(value).split()
                         splitting = splitting[0].split(sep="-", maxsplit=-1)
