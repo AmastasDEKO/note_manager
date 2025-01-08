@@ -5,180 +5,162 @@
 Выводит сообщение, если заметка не найдена.
 Обновляет список заметок.
 """
+# Подключение библиотеки дата/время и цвета текста
+from datetime import datetime
+from colorama import init, Fore
+# Определение автоматического сбрасывания настроек цвета текста
+init(autoreset=True)
+# Создание списка с заметками
+notes1 = [{
+        "username":"анна",
+        "titles":["дом", "пылесос"],
+        "content":"купить домой пылесос",
+        "status":"в процессе",
+        "created_date":datetime(2025,1,2),
+        "issue_date":datetime(2025,1,10)
+        },
+          {
+        "username":"кристина",
+        "titles":["любовь", "подарок"],
+        "content":"выбрать подарок на 14 февраля",
+        "status":"новая",
+        "created_date":datetime.today(),
+        "issue_date":datetime(2025,1,15)
+        },
+          {
+        "username":"максим",
+        "titles":["стиральная машина", "дом"],
+        "content":"отремонтировать стиральную машину в доме бабушки",
+        "status":"отложено",
+        "created_date":datetime(2025,1,10),
+        "issue_date":datetime(2025,1,25)
+        },
+          {
+        "username":"анна",
+        "titles":["машина", "поход"],
+        "content":"загрузить машину инвентарем для похода в горы",
+        "status":"выполнено",
+        "created_date":datetime(2025,1,2),
+        "issue_date":datetime(2025,1,20)
+        },
+          {
+        "username":"анна",
+        "titles":["рисование", "любовь"],
+        "content":"написать сочинение об любви к рисованию",
+        "status":"в процессе",
+        "created_date":datetime(2025,1,6),
+        "issue_date":datetime(2025,1,30)
+        }]
+# Создание пустого списка
+notes2 = []
 
-# Создание списка с заметками(неполные)
-notes = [{
-        "ID":1,
-        "username":"Анна Робкова",
-        "titles":["Дом", "Пылесос"],
-        "content":"Купить домой пылесос"
-        },
-        {
-        "ID": 2,
-        "username":"Кристина Ромашковна",
-        "titles":["Любовь", "Подарок"],
-        "content":"Выбрать подарок на 14 февраля"
-        },
-        {
-        "ID": 3,
-        "username":"Максим Любиц",
-        "titles":["Стиральная машина", "Дом"],
-        "content":"Отремонтировать стиральную машину в доме бабушки"
-        },
-        {
-        "ID": 4,
-        "username":"Анна Робкова",
-        "titles":["Машина", "Поход"],
-        "content":"Загрузить машину инвентарем для похода в горы"
-        },
-        {
-        "ID": 5,
-        "username":"Анна Токарева",
-        "titles":["Рисование", "Любовь"],
-        "content":"Написать сочинение об любви к рисованию"
+# Создание списка с одной заметкой
+notes3 = [{
+        "username":"костя",
+        "titles":["код", "гит"],
+        "content":"проверить код на гитхабе",
+        "status":"в процессе",
+        "created_date":datetime.today(),
+        "issue_date":datetime(2025,1,12)
         }]
 
-# Функция удаления записок
-def delete_notes(notes_ID, _notes2):
-            # Запрос на удаление
-            last_choice = input("Точно хотите удалить заметку? (Да/Нет)\nВвод: ").strip().capitalize()
-            if last_choice == "Да":
-                # Если согласились, удаляем, выводим сообщение и возвращаем список
-                _notes2.pop(notes_ID)
-                print("Успешно удалено")
-                return _notes2
-            elif last_choice == "Нет":
-                # Если отказались, выводим сообщение и возвращаем список
-                print("Отмена удаления")
-                return _notes2
-            else:
-                # Обработка ошибки ввода
-                print("Ошибка ввода (Допустимо: Да, Нет)")
-                return delete_notes(notes_ID, _notes2)
-
-# Функция поиска записок
-def find_note(key_word, word, _notes):
-    # Создаём дубликат списка записок
-    _notes2 = _notes[:]
-    # Счётчик найденных заметок
-    count = 0
-    # Цикл поиска
-    while True:
-        # Поиск по заголовку
-        if key_word == "Заголовок":
-            # Перебор заметок
-            for i in range(len(_notes)):
-                note = _notes[i]
-                # Поиск в списке
-                if word in note["titles"]:
-                    count += 1
-                    # Обновляем дубликат списка
-                    _notes2 = delete_notes(i, _notes2)
-
-            else:
-                # Если счётчик не изменился выводим сообщение
-                if count == 0:
-                    print("Заметка не найдена")
-                    break
-                else:
-                    break
-        # Поиск по имени пользователя
-        else:
-            # Перебор заметок
-            for i in range(len(_notes)):
-                note = _notes[i]
-                # Поиск в списке
-                if word.lower() == note["username"].lower():
-                    count += 1
-                    # Обновляем дубликат списка
-                    _notes2 = delete_notes(i, _notes)
-
-            else:
-                # Если счётчик не изменился выводим сообщение
-                if count == 0:
-                    print("Заметка не найдена")
-                    break
-                else:
-                    break
-    # Возвращаем дубликат
-    return _notes2
-
-# Функция для выбора критерия
-def input_key_word():
-    # Словарь значений статуса
-    choice_key_word = {"1": "Заголовок", "2": "Имя пользователя"}
-    # Ввод нового статуса и проверка корректности ввода
-    key_word = input("Выберете критерий удаления:\n1.Заголовок \n2.Имя пользователя\nВвод: ").strip().capitalize()
-    # Проверка по ключу(цифре)
-    if key_word in choice_key_word.keys():
-        return choice_key_word[key_word]
-    # Проверка по значению(словам)
-    elif key_word in choice_key_word.values():
-        return key_word
-    else:
-        #Обработка ошибки ввода
-        print("Ошибка ввода (Допустимо: 1, 2 или Заголовок, Имя пользователя)")
-        return input_key_word()
-    
 # Функция для вывода списка заметок
-def output_notes(_notes):
+def display_notes(_notes):
+    if not _notes:
+        return
     # Создания словаря для вывода полей на русском
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
                   'content': "Описание",
+                  'status': "Статус",
+                  'created_date': 'Дата создания',
+                  'issue_date': 'Дедлайн'
                   }
+    print("Список заметок:")
+    print("---------------")
+    # Цикл вывода заметок из списка
+    for i in range(len(_notes)):
+        # Помещаем текущую заметку в переменную
+        note = _notes[i]
+        # Вывод данных заметки
+        print(f"Заметка №{i + 1}")
+        for key, value in note.items():
+            if key == "titles":
+                print(f"{note_print[key]}: {", ".join(value).title()}")
+            elif key == "created_date" or key == "issue_date":
+                splitting = str(value).split()
+                splitting = splitting[0].split(sep="-", maxsplit=-1)
+                print(f"{note_print[key]}: {'.'.join(splitting[:0:-1])}")
+            else:
+                print(f"{note_print[key]}: {value.capitalize()}")
+        else:
+            print("---------------")
+
+# Функция поиска записок
+def delete_notes(_notes):
     # Проверка на наличие заметок
     if len(_notes) == 0:
-        print("Нет ни одной заметки")
+        print("\nУ вас нет сохранённых заметок\n")
         return
-    else:
-        print("Список заметок:")
-        # Цикл вывода заметок из списка
-        for i in range(len(_notes)):
-            # Помещаем текущую заметку в переменную
-            note = _notes[i]
-            # Вывод данных заметки
-            print(f"\nЗаметка №{note["ID"]}")
-            for key, value in note.items():
-                if key == "titles":
-                    print(f"{note_print[key]}:", ", ".join(value))
-                # Пропускаем ID
-                elif key == "ID":
-                    continue
-                else:
-                    print(f"{note_print[key]}: {value}")
+    while True:
+        input_keyword = input("Введите заголовок или имя пользователя: ").strip().lower()
+        # Проверка на пустой ввод
+        if input_keyword == "":
+            print("Пожалуйста заполните поле.")
+        else:
+            # Создаём дубликат списка записок
+            new_notes = _notes[:]
+            cancel_delete = False
+            # Перебор заметок
+            for i in range(len(_notes)):
+                note = _notes[i]
+                # Поиск в списке
+                if input_keyword in note["titles"]:
+                    while True:
+                        # Запрос на удаление
+                        last_choice = input(f"Точно хотите удалить заметку c заголовками "
+                                             f"{", ".join(note["titles"]).title()} (Да/Нет)\nВвод: ").strip().lower()
+                        if last_choice == "да":
+                            # Если согласились, удаляем, выводим сообщение и завершаем цикл
+                            new_notes.pop(i)
+                            print(Fore.GREEN + "Успешно удалено")
+                            break
+                        elif last_choice == "нет":
+                            cancel_delete = True
+                            # Если отказались, выводим сообщение и завершаем цикл
+                            print(Fore.BLUE + "Отмена удаления")
+                            break
+                        else:
+                            # Обработка ошибки ввода
+                            print(Fore.RED + "Ошибка ввода (Допустимо: Да, Нет)")
+                elif input_keyword in note["username"]:
+                    while True:
+                        # Запрос на удаление
+                        last_choice = input(f"Точно хотите удалить заметку пользователя "
+                                            f"{note["username"].capitalize()}(Да/Нет)\nВвод: ").strip().lower()
+                        if last_choice == "да":
+                            # Если согласились, удаляем, выводим сообщение и завершаем цикл
+                            new_notes.pop(i)
+                            print(Fore.GREEN + "Успешно удалено")
+                            break
 
-# Функция запроса на удаление
-def can_delete(_notes):
-    # Запрос на удаление заметки
-    delete = input("Хотите удалить заметку? (Да/Нет)\nВвод: ").strip().capitalize()
-    if delete == "Да":
-        key_word = input_key_word()
-        # Обработка выбранного критерия
-        while True:
-            if key_word == "Заголовок":
-                title = input("Введите заголовок: ").strip().capitalize()
-                # Проверка на пустой ввод
-                if title == "":
-                    print("Пожалуйста заполните заголовок.")
+                        elif last_choice == "нет":
+                            cancel_delete = True
+                            # Если отказались, выводим сообщение и завершаем цикл
+                            print(Fore.BLUE + "Отмена удаления")
+                            break
+                        else:
+                            # Обработка ошибки ввода
+                            print(Fore.RED + "Ошибка ввода (Допустимо: Да, Нет)")
+            else:
+                if len(_notes) == len(new_notes) and not cancel_delete:
+                    print("Заметка не найдена")
+                    return
                 else:
-                    _notes = find_note(key_word, title, _notes)
                     break
-            elif key_word == "Имя пользователя":
-                username = input("Введите имя пользователя: ").strip()
-                # Проверка на пустой ввод
-                if username == "":
-                    print("Пожалуйста заполните имя пользователя.")
-                else:
-                    _notes = find_note(key_word, username, _notes)
-                    break
 
-        return can_delete(_notes)
-    elif delete == "Нет":
-        output_notes(_notes)
-    else:
-        # Обработка ошибки ввода
-        print("Ошибка ввода (Допустимо: Да, Нет)")
-        return can_delete(_notes)
+    # Заменяем список
+    return new_notes
 
-can_delete(notes)
+# Вызов функции
+display_notes(delete_notes(notes3))
