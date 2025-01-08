@@ -64,7 +64,6 @@ notes3 = [{
 
 # Функция для вывода списка заметок
 def display_notes(_notes):
-
     # Создания словаря для вывода полей на русском
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -73,12 +72,6 @@ def display_notes(_notes):
                   'created_date': 'Дата создания',
                   'issue_date': 'Дедлайн'
                   }
-    # Создания словаря для фильтров вывода
-    filter_choice = ("1","неполный вывод",
-                     "2","сортировка по дате создания",
-                     "3","сортировка по дате дедлайна",
-                     "4","вывод в виде таблицы",
-                     "5","без фильтров")
     print("Список заметок:")
     print("---------------")
     # Цикл вывода заметок из списка
@@ -89,9 +82,7 @@ def display_notes(_notes):
         print(f"Заметка №{i + 1}")
         for key, value in note.items():
             if key == "titles":
-                for j in range(len(value)):
-                    value[j] = value[j].capitalize()
-                print(f"{note_print[key]}: {", ".join(value)}")
+                print(f"{note_print[key]}: {", ".join(value).title()}")
             elif key == "created_date" or key == "issue_date":
                 splitting = str(value).split()
                 splitting = splitting[0].split(sep="-", maxsplit=-1)
