@@ -39,7 +39,7 @@ def output_notes(_note):
         else:
             print(f"{note_print[key]}: {value.capitalize()}")
 
-# Функция для создания заметок
+# Функция для изменения заметок
 def update_note(_note):
     # Кортеж с полями, которые можно изменить и выход
     choice_field = ("1","имя пользователя",
