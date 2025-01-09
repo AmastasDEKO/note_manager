@@ -143,14 +143,14 @@ def update_note(_note):
                     # Проверка по ключу(цифре)
                     if new_status in choice_status.keys():
                         # Изменение и вывод нового статуса
-                        note["status"] = choice_status[new_status]
-                        print(f"Статус успешно обновлен на: {note["status"]}")
+                        _note["status"] = choice_status[new_status]
+                        print(f"Статус успешно обновлен на: {_note["status"]}")
                         break
                     # Проверка по значению(словам)
                     elif new_status in choice_status.values():
                         # Изменение и вывод нового статуса
-                        note["status"] = new_status
-                        print(f"Статус успешно обновлен на: {note["status"]}")
+                        _note["status"] = new_status
+                        print(f"Статус успешно обновлен на: {_note["status"]}")
                         break
                     else:
                         print("Ошибка ввода (Допустимо: 1, 2, 3 или Выполнено, В процессе, Отложено)")
