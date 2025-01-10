@@ -12,7 +12,7 @@ from create_note_function import create_note
 from update_note_function import  update_note
 from display_notes_function import display_notes
 from delete_note import delete_notes
-from search_notes_function import search_notes, output_notes
+from search_notes_function import search_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Создание списка заметок с содержимым
@@ -116,7 +116,11 @@ while True:
                 input_keyword = input("Введите ключевые слова через пробел или оставьте поле пустым "
                                       "\n(Зона поиска: Имя пользователя, Заголовки, Описание)"
                                       "\nВвод: ").strip().lower()
-                output_notes(search_notes(notes, input_keyword.split()))
+                founded_notes = search_notes(notes, input_keyword.split())
+                if len(founded_notes) == 0:
+                    break
+                else:
+                    display_notes(founded_notes)
                 break
             # Только статус
             elif input_choice in choice_tuple[2:4]:
@@ -148,7 +152,11 @@ while True:
                         # Обработка ошибки ввода
                         print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
                     # Вызов функций для 3 списков заметок
-                output_notes(search_notes(notes, status= input_status))
+                founded_notes = search_notes(notes, status= input_status)
+                if len(founded_notes) == 0:
+                    break
+                else:
+                    display_notes(founded_notes)
                 break
             # Ключевое слово и статус
             elif input_choice in choice_tuple[4:]:
@@ -181,7 +189,11 @@ while True:
                     # Обработка ошибки ввода
                     else:
                         print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
-                output_notes(search_notes(notes, input_keyword.split(), input_status))
+                founded_notes = search_notes(notes, input_keyword.split(), input_status)
+                if len(founded_notes) == 0:
+                    break
+                else:
+                    display_notes(founded_notes)
                 break
             else:
                 print(Fore.RED + "Ошибка ввода "
