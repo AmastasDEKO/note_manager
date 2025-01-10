@@ -139,7 +139,7 @@ def update_note(_note):
                     if new_status in choice_status.keys():
                         # Изменение и вывод нового статуса
                         _note["status"] = choice_status[new_status]
-                        print(Fore.GREEN+f"Статус успешно обновлен на: {_note["status"]}")
+                        print(Fore.GREEN+f"Статус успешно обновлен на: {_note["status"].capitalize()}")
                         break
                     # Проверка по значению(словам)
                     elif new_status in choice_status.values():
