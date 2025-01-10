@@ -14,61 +14,6 @@ from colorama import init, Fore, Back, Style
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 
-# Создание списка с заметками
-notes1 = [{
-        "username":"анна",
-        "titles":["дом", "пылесос"],
-        "content":"купить домой пылесос",
-        "status":"в процессе",
-        "created_date":datetime(2025,1,2),
-        "issue_date":datetime(2025,1,10)
-        },
-          {
-        "username":"кристина",
-        "titles":["любовь", "подарок"],
-        "content":"выбрать подарок на 14 февраля",
-        "status":"новая",
-        "created_date":datetime.today(),
-        "issue_date":datetime(2025,1,15)
-        },
-          {
-        "username":"максим",
-        "titles":["стиральная машина", "дом"],
-        "content":"отремонтировать стиральную машину в доме бабушки",
-        "status":"отложено",
-        "created_date":datetime(2025,1,10),
-        "issue_date":datetime(2025,1,25)
-        },
-          {
-        "username":"анна",
-        "titles":["машина", "поход"],
-        "content":"загрузить машину инвентарем для похода в горы",
-        "status":"выполнено",
-        "created_date":datetime(2025,1,2),
-        "issue_date":datetime(2025,1,20)
-        },
-          {
-        "username":"анна",
-        "titles":["рисование", "любовь"],
-        "content":"написать сочинение об любви к рисованию",
-        "status":"в процессе",
-        "created_date":datetime(2025,1,6),
-        "issue_date":datetime(2025,1,30)
-        }]
-
-# Создание пустого списка
-notes2 = []
-
-# Создание списка с одной заметкой
-notes3 = [{
-        "username":"костя",
-        "titles":["код", "гит"],
-        "content":"проверить код на гитхабе",
-        "status":"в процессе",
-        "created_date":datetime.today(),
-        "issue_date":datetime(2025,1,12)
-        }]
-
 # Функция сортировки выборкой
 def sort_by_date(_notes, name_date):
     # Перебор заметок в списке
@@ -250,8 +195,62 @@ def display_notes(_notes):
             print("Ошибка ввода (Допустимо:1, 2, 3, 4, 5 или"
                   " Неполный вывод, Сортировка по дате создания,"
                   " Сортировка по дате дедлайна, Вывод в виде таблицы, Без фильтров")
+if __name__ == "__main__":
+    # Создание списка с заметками
+    notes1 = [{
+        "username": "анна",
+        "titles": ["дом", "пылесос"],
+        "content": "купить домой пылесос",
+        "status": "в процессе",
+        "created_date": datetime(2025, 1, 2),
+        "issue_date": datetime(2025, 1, 10)
+    },
+        {
+            "username": "кристина",
+            "titles": ["любовь", "подарок"],
+            "content": "выбрать подарок на 14 февраля",
+            "status": "новая",
+            "created_date": datetime.today(),
+            "issue_date": datetime(2025, 1, 15)
+        },
+        {
+            "username": "максим",
+            "titles": ["стиральная машина", "дом"],
+            "content": "отремонтировать стиральную машину в доме бабушки",
+            "status": "отложено",
+            "created_date": datetime(2025, 1, 10),
+            "issue_date": datetime(2025, 1, 25)
+        },
+        {
+            "username": "анна",
+            "titles": ["машина", "поход"],
+            "content": "загрузить машину инвентарем для похода в горы",
+            "status": "выполнено",
+            "created_date": datetime(2025, 1, 2),
+            "issue_date": datetime(2025, 1, 20)
+        },
+        {
+            "username": "анна",
+            "titles": ["рисование", "любовь"],
+            "content": "написать сочинение об любви к рисованию",
+            "status": "в процессе",
+            "created_date": datetime(2025, 1, 6),
+            "issue_date": datetime(2025, 1, 30)
+        }]
 
-#Вызов функции с разными списками
-display_notes(notes1)
-display_notes(notes2)
-display_notes(notes3)
+    # Создание пустого списка
+    notes2 = []
+
+    # Создание списка с одной заметкой
+    notes3 = [{
+        "username": "костя",
+        "titles": ["код", "гит"],
+        "content": "проверить код на гитхабе",
+        "status": "в процессе",
+        "created_date": datetime.today(),
+        "issue_date": datetime(2025, 1, 12)
+    }]
+    # Вызов функции с разными списками
+    display_notes(notes1)
+    display_notes(notes2)
+    display_notes(notes3)
