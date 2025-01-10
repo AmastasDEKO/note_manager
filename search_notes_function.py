@@ -5,7 +5,6 @@
 Возвращает список найденных заметок.
 Выводит сообщение, если ничего не найдено.
 """
-
 # Подключение библиотеки дата/время
 from datetime import datetime
 from colorama import init, Fore
