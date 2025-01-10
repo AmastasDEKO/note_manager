@@ -21,7 +21,7 @@ def output_note(_note):
                   'created_date': 'Дата создания',
                   'issue_date': 'Дата истечения'
                   }
-
+    print("---------------")
     for key, value in _note.items():
         if key == "titles":
             print(f"{note_print[key]}:", ", ".join(value).title())
@@ -31,10 +31,11 @@ def output_note(_note):
             print(f"{note_print[key]}:", '.'.join(splitting[:0:-1]))
         else:
             print(f"{note_print[key]}: {value.capitalize()}")
+    else:
+        print("---------------")
 
 # Функция для изменения заметок
 def update_note(_note):
-    print("\n")
     output_note(_note)
     # Кортеж с полями, которые можно изменить и выход
     choice_field = ("1","имя пользователя",
@@ -42,11 +43,10 @@ def update_note(_note):
                     '3', "описание",
                     '4', "статус",
                     '5', 'дата истечения',
-                    '6', 'выход'
-                    )
+                    '6', 'выход')
     while True:
         # Ввод поля
-        field = input("\nВыберите поле для изменения:"
+        field = input("Выберите поле для изменения:"
                       "\n1. Имя пользователя"
                       "\n2. Заголовки"
                       "\n3. Описание"
