@@ -34,6 +34,7 @@ def output_note(_note):
 
 # Функция для изменения заметок
 def update_note(_note):
+    print("\n")
     output_note(_note)
     # Кортеж с полями, которые можно изменить и выход
     choice_field = ("1","имя пользователя",
