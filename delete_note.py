@@ -48,7 +48,7 @@ def display_notes(_notes):
 def delete_notes(_notes):
     # Проверка на наличие заметок
     if len(_notes) == 0:
-        print("\nУ вас нет сохранённых заметок\n")
+        print(Fore.BLUE+"У вас нет сохранённых заметок")
         return
     while True:
         input_keyword = input("Введите заголовок или имя пользователя: ").strip().lower()
