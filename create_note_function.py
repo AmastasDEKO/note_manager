@@ -159,7 +159,7 @@ def create_note():
             print("Ошибка ввода. (Допустимо: да, нет)")
 
     return new_note
-
+# Главная часть
 if __name__ == "__main__":
     # Вызов функций
     output_notes(create_note())
