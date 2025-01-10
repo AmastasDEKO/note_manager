@@ -14,7 +14,7 @@ from colorama import init, Fore
 init(autoreset=True)
 
 # Функция для вывода списка заметок
-def display_notes(_notes):
+def output_notes(_notes):
     # Создания словаря для вывода полей на русском
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -23,6 +23,8 @@ def display_notes(_notes):
                   'created_date': 'Дата создания',
                   'issue_date': 'Дедлайн'
                   }
+    if len(_notes) == 0:
+        return
     print("Список заметок:")
     print("---------------")
     # Цикл вывода заметок из списка
@@ -49,8 +51,8 @@ def search_notes(_notes, keyword=None, status=None):
     searched_notes = []
     # Проверка на наличие заметок
     if len(_notes) == 0:
-        print("\nУ вас нет сохранённых заметок\n")
-        return
+        print(Fore.BLUE+"У вас нет сохранённых заметок")
+        return searched_notes
     # Проверка наличия ключевых слов
     if keyword and status is None:
         for i in range(len(keyword)):
@@ -78,9 +80,9 @@ def search_notes(_notes, keyword=None, status=None):
     # Проверка найденных заметок
     if len(searched_notes) == 0:
         print(Fore.BLUE+"Заметки, соответствующие запросу, не найдены.")
-        return
-    # Вывод заметок
-    display_notes(searched_notes)
+        return searched_notes
+    # Возвращаем найденные заметки
+    return searched_notes
 # Главная часть
 if __name__ == "__main__":
     notes1 = [{
@@ -135,46 +137,110 @@ if __name__ == "__main__":
         "created_date": datetime.today(),
         "issue_date": datetime(2025, 1, 12)
     }]
-
-    # Ввод ключевых слов
-    input_keyword = input("Введите ключевые слова через пробел или оставьте поле пустым "
-                          "\n(Зона поиска: Имя пользователя, Заголовки, Описание)"
-                          "\nВвод: ").strip().lower()
-
-    # Ввод статуса
+    # Кортеж критериев
+    choice_tuple = ("1", "ключевое слово", "2", "статус", "3", "ключевое слово и статус")
+    # Цикл выбора критерия
     while True:
-        # Словарь значений статуса
-        choice_status = {"1": "выполнено",
-                         "2": "в процессе",
-                         "3": "новая",
-                         "4": "отложено"
-                         }
-        # Ввод нового статуса и проверка корректности ввода
-        _status = input(
-            "Введите статус или оставьте поле пустым:\n1. Выполнено\n2. В процессе\n3. Новая\n4. Отложено\nВвод: ").strip().lower()
-        # Проверка по ключу(цифре)
-        if _status in choice_status.keys():
-            # Сохранение статуса в переменную
-            input_status = choice_status[_status]
+        input_choice = input("Выберите критерий поиска:"
+                             "\n1. Ключевое слово"
+                             "\n2. Статус"
+                             "\n3. Ключевое слово и статус"
+                             "\nВвод: ")
+        # Только ключевое слово
+        if input_choice in choice_tuple[:2]:
+            # Ввод ключевых слов
+            input_keyword = input("Введите ключевые слова через пробел или оставьте поле пустым "
+                                  "\n(Зона поиска: Имя пользователя, Заголовки, Описание)"
+                                  "\nВвод: ").strip().lower()
+            # Вызов функций для 3 списков заметок
+            print("\nОбычный список")
+            output_notes(search_notes(notes1, input_keyword.split()))
+            print("\nПустой список")
+            output_notes(search_notes(notes2, input_keyword.split()))
+            print("\nСписок с 1 заметкой")
+            output_notes(search_notes(notes3, input_keyword.split()))
             break
-        # Проверка по значению(словам)
-        elif _status in choice_status.values():
-            # Сохранение статуса переменную
-            input_status = _status
+        # Только статус
+        elif input_choice in choice_tuple[2:4]:
+            # Ввод статуса
+            while True:
+                # Словарь значений статуса
+                choice_status = {"1": "выполнено",
+                                 "2": "в процессе",
+                                 "3": "новая",
+                                 "4": "отложено"
+                                 }
+                # Ввод нового статуса и проверка корректности ввода
+                _status = input(
+                    "Введите статус или оставьте поле пустым:\n1. Выполнено\n2. В процессе\n3. Новая\n4. Отложено\nВвод: ").strip().lower()
+                # Проверка по ключу(цифре)
+                if _status in choice_status.keys():
+                    # Сохранение статуса в переменную
+                    input_status = choice_status[_status]
+                    break
+                # Проверка по значению(словам)
+                elif _status in choice_status.values():
+                    # Сохранение статуса переменную
+                    input_status = _status
+                    break
+                elif _status == "":
+                    input_status = _status
+                    break
+                else:
+                    # Обработка ошибки ввода
+                    print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
+                # Вызов функций для 3 списков заметок
+            print("\nОбычный список")
+            output_notes(search_notes(notes1, status= input_status))
+            print("\nПустой список")
+            output_notes(search_notes(notes2, status=input_status))
+            print("\nСписок с 1 заметкой")
+            output_notes(search_notes(notes3, status=input_status))
             break
-        elif _status == "":
-            input_status = _status
+        # Ключевое слово и статус
+        elif input_choice in choice_tuple[4:]:
+            # Ввод ключевых слов
+            input_keyword = input("Введите ключевые слова через пробел или оставьте поле пустым "
+                                  "\n(Зона поиска: Имя пользователя, Заголовки, Описание)"
+                                  "\nВвод: ").strip().lower()
+
+            # Ввод статуса
+            while True:
+                # Словарь значений статуса
+                choice_status = {"1": "выполнено",
+                                 "2": "в процессе",
+                                 "3": "новая",
+                                 "4": "отложено"
+                                 }
+                # Ввод нового статуса и проверка корректности ввода
+                _status = input(
+                    "Введите статус или оставьте поле пустым:\n1. Выполнено\n2. В процессе\n3. Новая\n4. Отложено\nВвод: ").strip().lower()
+                # Проверка по ключу(цифре)
+                if _status in choice_status.keys():
+                    # Сохранение статуса в переменную
+                    input_status = choice_status[_status]
+                    break
+                # Проверка по значению(словам)
+                elif _status in choice_status.values():
+                    # Сохранение статуса переменную
+                    input_status = _status
+                    break
+                elif _status == "":
+                    input_status = _status
+                    break
+                else:
+                    # Обработка ошибки ввода
+                    print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
+            # Вызов функций для 3 списков заметок
+            print("\nОбычный список")
+            output_notes(search_notes(notes1, input_keyword.split(), input_status))
+            print("\nПустой список")
+            output_notes(search_notes(notes1, input_keyword.split(), input_status))
+            print("\nСписок с 1 заметкой")
+            output_notes(search_notes(notes1, input_keyword.split(), input_status))
             break
         else:
-            # Обработка ошибки ввода
-            print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
+            print(Fore.RED+"Ошибка ввода (Допустимо: 1, 2, 3, или Ключевое слово, Статус, Ключевое слово и статус")
 
-    # Вызов функций для 3 списков заметок
-    print("\nПервый список")
-    search_notes(notes1, input_keyword.split(), input_status)
-    print("\nВторой список")
-    search_notes(notes2, input_keyword.split(), input_status)
-    print("\nТретий список")
-    search_notes(notes3, input_keyword.split(), input_status)
 
 
