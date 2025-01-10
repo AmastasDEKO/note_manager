@@ -83,7 +83,7 @@ def display_notes(_notes):
                 # Сравниваем текущий элемент списка и конечный элемент страницы
                 if i >= index:
                     print("---------------")
-                    print(f"Страница №{page}")
+                    print(f"  Страница №{page}\n")
                     # Запрос на открытие следующей страницы
                     while True:
                         input_open_next_page = input("Желаете открыть следующую страницу? "
@@ -106,7 +106,7 @@ def display_notes(_notes):
                         print(f"{note_print[key]}: {Fore.YELLOW+Style.BRIGHT+", ".join(value).title()}")
             else:
                 print("---------------")
-                print(f"Страница №{page}")
+                print(f"  Страница №{page}\n")
                 break
         # Сортировка по дате создания
         elif filter_display in filter_choice[2:4]:
@@ -122,7 +122,7 @@ def display_notes(_notes):
                 # Сравниваем текущий элемент списка и конечный элемент страницы
                 if i >= index:
                     print("---------------")
-                    print(f"Страница №{page}")
+                    print(f"  Страница №{page}\n")
                     # Запрос на открытие следующей страницы
                     while True:
                         input_open_next_page = input("Желаете открыть следующую страницу? "
@@ -154,7 +154,7 @@ def display_notes(_notes):
                         print(f"{note_print[key]}: {value.capitalize()}")
             else:
                 print("---------------")
-                print(f"Страница №{page}")
+                print(f"  Страница №{page}\n")
                 break
         # Сортировка по дате дедлайна
         elif filter_display in filter_choice[4:6]:
@@ -170,7 +170,7 @@ def display_notes(_notes):
                 # Сравниваем текущий элемент списка и конечный элемент страницы
                 if i >= index:
                     print("---------------")
-                    print(f"Страница №{page}")
+                    print(f"  Страница №{page}\n")
                     # Запрос на открытие следующей страницы
                     while True:
                         input_open_next_page = input("Желаете открыть следующую страницу? "
@@ -202,7 +202,7 @@ def display_notes(_notes):
                         print(f"{note_print[key]}: {value.capitalize()}")
             else:
                 print("---------------")
-                print(f"Страница №{page}")
+                print(f"  Страница №{page}\n")
                 break
         # Вывод в виде таблицы
         elif filter_display in filter_choice[6:8]:
@@ -242,7 +242,7 @@ def display_notes(_notes):
                 # Сравниваем текущий элемент списка и конечный элемент страницы
                 if i >= index:
                     print("---------------")
-                    print(f"Страница №{page}")
+                    print(f"  Страница №{page}\n")
                     # Запрос на открытие следующей страницы
                     while True:
                         input_open_next_page = input("Желаете открыть следующую страницу? "
@@ -271,7 +271,7 @@ def display_notes(_notes):
 
             else:
                 print("---------------")
-                print(f"Страница №{page}")
+                print(f"  Страница №{page}\n")
                 break
         # Обработка ошибок ввода
         else:
