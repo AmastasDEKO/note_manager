@@ -59,7 +59,7 @@ def display_notes(_notes):
                      "5","без фильтров")
     # Проверка на наличие заметок
     if len(_notes) == 0:
-        print("\nУ вас нет сохранённых заметок\n")
+        print(Fore.BLUE+"У вас нет сохранённых заметок")
         return
     # Цикл вывода
     while True:
