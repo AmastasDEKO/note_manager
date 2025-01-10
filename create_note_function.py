@@ -160,7 +160,9 @@ def create_note():
 
     return new_note
 
-# Вызов функций
-output_notes(create_note())
+if __name__ == "__main__":
+    # Вызов функций
+    output_notes(create_note())
+
 
 
