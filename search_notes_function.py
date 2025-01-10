@@ -8,6 +8,10 @@
 
 # Подключение библиотеки дата/время
 from datetime import datetime
+from colorama import init, Fore
+
+# Определение автоматического сбрасывания настроек цвета текста
+init(autoreset=True)
 
 # Функция для вывода списка заметок
 def display_notes(_notes):
@@ -48,17 +52,28 @@ def search_notes(_notes, keyword=None, status=None):
         print("\nУ вас нет сохранённых заметок\n")
         return
     # Проверка наличия ключевых слов
-    if keyword:
+    if keyword and status is None:
         for i in range(len(keyword)):
             for j in range(len(_notes)):
                 note = _notes[j]
-                if keyword[i] in note["username"] or keyword[i] in note["titles"] or keyword[i] in note["content"]:
+                if (keyword[i] in note["username"]
+                    or keyword[i] in note["titles"]
+                    or keyword[i] in note["content"]):
                     searched_notes.append(note)
     # Проверка наличия статуса
-    if status:
+    elif status and  keyword is None:
             for i in range(len(_notes)):
                 note = _notes[i]
                 if status == note["status"]:
+                    searched_notes.append(note)
+    elif status and keyword:
+        for i in range(len(keyword)):
+            for j in range(len(_notes)):
+                note = _notes[j]
+                if ((keyword[i] in note["username"]
+                    or keyword[i] in note["titles"]
+                    or keyword[i] in note["content"])
+                    and status == note["status"]):
                     searched_notes.append(note)
     # Проверка найденных заметок
     if len(searched_notes) == 0:
