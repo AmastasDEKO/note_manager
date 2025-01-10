@@ -5,6 +5,7 @@
 Возвращает список найденных заметок.
 Выводит сообщение, если ничего не найдено.
 """
+
 # Подключение библиотеки дата/время
 from datetime import datetime
 from colorama import init, Fore
@@ -76,7 +77,7 @@ def search_notes(_notes, keyword=None, status=None):
                     searched_notes.append(note)
     # Проверка найденных заметок
     if len(searched_notes) == 0:
-        print("Заметки, соответствующие запросу, не найдены.")
+        print(Fore.BLUE+"Заметки, соответствующие запросу, не найдены.")
         return
     # Вывод заметок
     display_notes(searched_notes)
