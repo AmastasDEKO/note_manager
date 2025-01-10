@@ -10,59 +10,6 @@ from datetime import datetime
 from colorama import init, Fore
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
-# Создание списка с заметками
-notes1 = [{
-        "username":"анна",
-        "titles":["дом", "пылесос"],
-        "content":"купить домой пылесос",
-        "status":"в процессе",
-        "created_date":datetime(2025,1,2),
-        "issue_date":datetime(2025,1,10)
-        },
-          {
-        "username":"кристина",
-        "titles":["любовь", "подарок"],
-        "content":"выбрать подарок на 14 февраля",
-        "status":"новая",
-        "created_date":datetime.today(),
-        "issue_date":datetime(2025,1,15)
-        },
-          {
-        "username":"максим",
-        "titles":["стиральная машина", "дом"],
-        "content":"отремонтировать стиральную машину в доме бабушки",
-        "status":"отложено",
-        "created_date":datetime(2025,1,10),
-        "issue_date":datetime(2025,1,25)
-        },
-          {
-        "username":"анна",
-        "titles":["машина", "поход"],
-        "content":"загрузить машину инвентарем для похода в горы",
-        "status":"выполнено",
-        "created_date":datetime(2025,1,2),
-        "issue_date":datetime(2025,1,20)
-        },
-          {
-        "username":"анна",
-        "titles":["рисование", "любовь"],
-        "content":"написать сочинение об любви к рисованию",
-        "status":"в процессе",
-        "created_date":datetime(2025,1,6),
-        "issue_date":datetime(2025,1,30)
-        }]
-# Создание пустого списка
-notes2 = []
-
-# Создание списка с одной заметкой
-notes3 = [{
-        "username":"костя",
-        "titles":["код", "гит"],
-        "content":"проверить код на гитхабе",
-        "status":"в процессе",
-        "created_date":datetime.today(),
-        "issue_date":datetime(2025,1,12)
-        }]
 
 # Функция для вывода списка заметок
 def display_notes(_notes):
@@ -161,6 +108,63 @@ def delete_notes(_notes):
 
     # Заменяем список
     return new_notes
+if __name__ == "__main__":
+    # Создание списка с заметками
+    notes1 = [{
+        "username": "анна",
+        "titles": ["дом", "пылесос"],
+        "content": "купить домой пылесос",
+        "status": "в процессе",
+        "created_date": datetime(2025, 1, 2),
+        "issue_date": datetime(2025, 1, 10)
+    },
+        {
+            "username": "кристина",
+            "titles": ["любовь", "подарок"],
+            "content": "выбрать подарок на 14 февраля",
+            "status": "новая",
+            "created_date": datetime.today(),
+            "issue_date": datetime(2025, 1, 15)
+        },
+        {
+            "username": "максим",
+            "titles": ["стиральная машина", "дом"],
+            "content": "отремонтировать стиральную машину в доме бабушки",
+            "status": "отложено",
+            "created_date": datetime(2025, 1, 10),
+            "issue_date": datetime(2025, 1, 25)
+        },
+        {
+            "username": "анна",
+            "titles": ["машина", "поход"],
+            "content": "загрузить машину инвентарем для похода в горы",
+            "status": "выполнено",
+            "created_date": datetime(2025, 1, 2),
+            "issue_date": datetime(2025, 1, 20)
+        },
+        {
+            "username": "анна",
+            "titles": ["рисование", "любовь"],
+            "content": "написать сочинение об любви к рисованию",
+            "status": "в процессе",
+            "created_date": datetime(2025, 1, 6),
+            "issue_date": datetime(2025, 1, 30)
+        }]
+    # Создание пустого списка
+    notes2 = []
 
-# Вызов функции
-display_notes(delete_notes(notes3))
+    # Создание списка с одной заметкой
+    notes3 = [{
+        "username": "костя",
+        "titles": ["код", "гит"],
+        "content": "проверить код на гитхабе",
+        "status": "в процессе",
+        "created_date": datetime.today(),
+        "issue_date": datetime(2025, 1, 12)
+    }]
+    # Вызов функций
+    display_notes(delete_notes(notes1))
+    print("\n")
+    display_notes(delete_notes(notes2))
+    print("\n")
+    display_notes(delete_notes(notes3))
