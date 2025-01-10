@@ -57,10 +57,9 @@ def search_notes(_notes, keyword=None, status=None):
     if keyword and status is None:
         for i in range(len(keyword)):
             for j in range(len(_notes)):
+                print(i, j)
                 note = _notes[j]
-                if (keyword[i] in note["username"]
-                    or keyword[i] in note["titles"]
-                    or keyword[i] in note["content"]):
+                if keyword[i] in note["username"] or keyword[i] in note["titles"] or keyword[i] in note["content"]:
                     searched_notes.append(note)
     # Проверка наличия статуса
     elif status and  keyword is None:
@@ -72,10 +71,8 @@ def search_notes(_notes, keyword=None, status=None):
         for i in range(len(keyword)):
             for j in range(len(_notes)):
                 note = _notes[j]
-                if ((keyword[i] in note["username"]
-                    or keyword[i] in note["titles"]
-                    or keyword[i] in note["content"])
-                    and status == note["status"]):
+                if (keyword[i] in note["username"] or keyword[i] in note["titles"]
+                    or keyword[i] in note["content"]) and status == note["status"]:
                     searched_notes.append(note)
     # Проверка найденных заметок
     if len(searched_notes) == 0:
@@ -145,7 +142,7 @@ if __name__ == "__main__":
                              "\n1. Ключевое слово"
                              "\n2. Статус"
                              "\n3. Ключевое слово и статус"
-                             "\nВвод: ")
+                             "\nВвод: ").strip().lower()
         # Только ключевое слово
         if input_choice in choice_tuple[:2]:
             # Ввод ключевых слов
