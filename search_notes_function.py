@@ -66,6 +66,7 @@ def search_notes(_notes, keyword=None, status=None):
         return
     # Вывод заметок
     display_notes(searched_notes)
+# Главная часть
 if __name__ == "__main__":
     notes1 = [{
         "username": "анна",
