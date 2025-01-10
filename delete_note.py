@@ -105,9 +105,9 @@ def delete_notes(_notes):
                     return
                 else:
                     break
-
     # Заменяем список
     return new_notes
+
 # Главная часть
 if __name__ == "__main__":
     # Создание списка с заметками
