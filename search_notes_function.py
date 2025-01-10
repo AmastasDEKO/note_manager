@@ -57,7 +57,6 @@ def search_notes(_notes, keyword=None, status=None):
     if keyword and status is None:
         for i in range(len(keyword)):
             for j in range(len(_notes)):
-                print(i, j)
                 note = _notes[j]
                 if keyword[i] in note["username"] or keyword[i] in note["titles"] or keyword[i] in note["content"]:
                     searched_notes.append(note)
