@@ -9,59 +9,6 @@
 # Подключение библиотеки дата/время
 from datetime import datetime
 
-notes1 = [{
-        "username":"анна",
-        "titles":["дом", "пылесос"],
-        "content":"купить домой пылесос",
-        "status":"в процессе",
-        "created_date":datetime(2025,1,2),
-        "issue_date":datetime(2025,1,10)
-        },
-          {
-        "username":"кристина",
-        "titles":["любовь", "подарок"],
-        "content":"выбрать подарок на 14 февраля",
-        "status":"новая",
-        "created_date":datetime.today(),
-        "issue_date":datetime(2025,1,15)
-        },
-          {
-        "username":"максим",
-        "titles":["стиральная машина", "дом"],
-        "content":"отремонтировать стиральную машину в доме бабушки",
-        "status":"отложено",
-        "created_date":datetime(2025,1,10),
-        "issue_date":datetime(2025,1,25)
-        },
-          {
-        "username":"анна",
-        "titles":["машина", "поход"],
-        "content":"загрузить машину инвентарем для похода в горы",
-        "status":"выполнено",
-        "created_date":datetime(2025,1,2),
-        "issue_date":datetime(2025,1,20)
-        },
-          {
-        "username":"анна",
-        "titles":["рисование", "любовь"],
-        "content":"написать сочинение об любви к рисованию",
-        "status":"в процессе",
-        "created_date":datetime(2025,1,6),
-        "issue_date":datetime(2025,1,30)
-        }]
-# Создание пустого списка
-notes2 = []
-
-# Создание списка с одной заметкой
-notes3 = [{
-        "username":"костя",
-        "titles":["код", "гит"],
-        "content":"проверить код на гитхабе",
-        "status":"в процессе",
-        "created_date":datetime.today(),
-        "issue_date":datetime(2025,1,12)
-        }]
-
 # Функция для вывода списка заметок
 def display_notes(_notes):
     # Создания словаря для вывода полей на русском
@@ -119,44 +66,99 @@ def search_notes(_notes, keyword=None, status=None):
         return
     # Вывод заметок
     display_notes(searched_notes)
+if __name__ == "__main__":
+    notes1 = [{
+        "username": "анна",
+        "titles": ["дом", "пылесос"],
+        "content": "купить домой пылесос",
+        "status": "в процессе",
+        "created_date": datetime(2025, 1, 2),
+        "issue_date": datetime(2025, 1, 10)
+    },
+        {
+            "username": "кристина",
+            "titles": ["любовь", "подарок"],
+            "content": "выбрать подарок на 14 февраля",
+            "status": "новая",
+            "created_date": datetime.today(),
+            "issue_date": datetime(2025, 1, 15)
+        },
+        {
+            "username": "максим",
+            "titles": ["стиральная машина", "дом"],
+            "content": "отремонтировать стиральную машину в доме бабушки",
+            "status": "отложено",
+            "created_date": datetime(2025, 1, 10),
+            "issue_date": datetime(2025, 1, 25)
+        },
+        {
+            "username": "анна",
+            "titles": ["машина", "поход"],
+            "content": "загрузить машину инвентарем для похода в горы",
+            "status": "выполнено",
+            "created_date": datetime(2025, 1, 2),
+            "issue_date": datetime(2025, 1, 20)
+        },
+        {
+            "username": "анна",
+            "titles": ["рисование", "любовь"],
+            "content": "написать сочинение об любви к рисованию",
+            "status": "в процессе",
+            "created_date": datetime(2025, 1, 6),
+            "issue_date": datetime(2025, 1, 30)
+        }]
+    # Создание пустого списка
+    notes2 = []
 
-# Ввод ключевых слов
-input_keyword = input("Введите ключевые слова через пробел или оставьте поле пустым "
-                      "\n(Зона поиска: Имя пользователя, Заголовки, Описание)"
-                      "\nВвод: ").strip().lower()
+    # Создание списка с одной заметкой
+    notes3 = [{
+        "username": "костя",
+        "titles": ["код", "гит"],
+        "content": "проверить код на гитхабе",
+        "status": "в процессе",
+        "created_date": datetime.today(),
+        "issue_date": datetime(2025, 1, 12)
+    }]
 
-# Ввод статуса
-while True:
-    # Словарь значений статуса
-    choice_status = {"1": "выполнено",
-                     "2": "в процессе",
-                     "3": "новая",
-                     "4": "отложено"
-                     }
-    # Ввод нового статуса и проверка корректности ввода
-    _status = input("Введите статус или оставьте поле пустым:\n1. Выполнено\n2. В процессе\n3. Новая\n4. Отложено\nВвод: ").strip().lower()
-    # Проверка по ключу(цифре)
-    if _status in choice_status.keys():
-        # Сохранение статуса в переменную
-        input_status = choice_status[_status]
-        break
-    # Проверка по значению(словам)
-    elif _status in choice_status.values():
-        # Сохранение статуса переменную
-        input_status = _status
-        break
-    elif _status == "":
-        input_status = _status
-        break
-    else:
-        # Обработка ошибки ввода
-        print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
+    # Ввод ключевых слов
+    input_keyword = input("Введите ключевые слова через пробел или оставьте поле пустым "
+                          "\n(Зона поиска: Имя пользователя, Заголовки, Описание)"
+                          "\nВвод: ").strip().lower()
 
-# Вызов функций для 3 списков заметок
-print("\nПервый список")
-search_notes(notes1, input_keyword.split(), input_status)
-print("\nВторой список")
-search_notes(notes2, input_keyword.split(), input_status)
-print("\nТретий список")
-search_notes(notes3, input_keyword.split(), input_status)
+    # Ввод статуса
+    while True:
+        # Словарь значений статуса
+        choice_status = {"1": "выполнено",
+                         "2": "в процессе",
+                         "3": "новая",
+                         "4": "отложено"
+                         }
+        # Ввод нового статуса и проверка корректности ввода
+        _status = input(
+            "Введите статус или оставьте поле пустым:\n1. Выполнено\n2. В процессе\n3. Новая\n4. Отложено\nВвод: ").strip().lower()
+        # Проверка по ключу(цифре)
+        if _status in choice_status.keys():
+            # Сохранение статуса в переменную
+            input_status = choice_status[_status]
+            break
+        # Проверка по значению(словам)
+        elif _status in choice_status.values():
+            # Сохранение статуса переменную
+            input_status = _status
+            break
+        elif _status == "":
+            input_status = _status
+            break
+        else:
+            # Обработка ошибки ввода
+            print("Ошибка ввода (Допустимо: 1, 2, 3, 4 или Выполнено, В процессе, Новая, Отложено)")
+
+    # Вызов функций для 3 списков заметок
+    print("\nПервый список")
+    search_notes(notes1, input_keyword.split(), input_status)
+    print("\nВторой список")
+    search_notes(notes2, input_keyword.split(), input_status)
+    print("\nТретий список")
+    search_notes(notes3, input_keyword.split(), input_status)
+
 
