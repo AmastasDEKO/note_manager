@@ -6,11 +6,13 @@
 Проверяет корректность ввода и обновляет выбранное поле.
 """
 
-# Подключение формата даты
+# Подключение формата даты и цвет текста
 from datetime import datetime
-
+from colorama import init, Fore
+# Определение автоматического сбрасывания настроек цвета текста
+init(autoreset=True)
 # Функция вывода данных о заметке
-def output_notes(_note):
+def output_note(_note):
     # Создания словаря для вывода полей на русском
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -32,6 +34,7 @@ def output_notes(_note):
 
 # Функция для изменения заметок
 def update_note(_note):
+    output_note(_note)
     # Кортеж с полями, которые можно изменить и выход
     choice_field = ("1","имя пользователя",
                     '2', "заголовки",
@@ -42,7 +45,7 @@ def update_note(_note):
                     )
     while True:
         # Ввод поля
-        field = input("Выберите поле для изменения:"
+        field = input("\nВыберите поле для изменения:"
                       "\n1. Имя пользователя"
                       "\n2. Заголовки"
                       "\n3. Описание"
@@ -60,17 +63,17 @@ def update_note(_note):
                                          "(для отмены оставьте поле пустым): ").strip().lower()
                     # Проверка на пустой ввод
                     if new_username != "":
-                        print("Имя пользователя изменено успешно")
+                        print(Fore.GREEN+"Имя пользователя изменено успешно")
                         _note["username"] = new_username
                         break
                     else:
-                        print("Имя пользователя не изменено.")
+                        print(Fore.BLUE+"Имя пользователя не изменено.")
                         break
                 elif last_choice == "нет":
-                    print("Вы отменили изменения")
+                    print(Fore.BLUE+"Вы отменили изменения")
                     break
                 else:
-                    print("Ошибка ввода (Допустимо: Да, Нет)")
+                    print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение заголовков
         elif field in choice_field[2:4]:
             while True:
@@ -86,16 +89,16 @@ def update_note(_note):
                         if new_title != "":
                             titles[i] = new_title
                         else:
-                            print("Заголовок не изменен")
+                            print(Fore.BLUE+"Заголовок не изменен")
                     else:
-                        print("Изменение заголовков успешно")
+                        print(Fore.GREEN+"Изменение заголовков успешно")
                         _note["titles"] = titles
                     break
                 elif last_choice == "нет":
-                    print("Вы отменили изменения")
+                    print(Fore.BLUE+"Вы отменили изменения")
                     break
                 else:
-                    print("Ошибка ввода (Допустимо: Да, Нет)")
+                    print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение описания
         elif field in choice_field[4:6]:
             while True:
@@ -106,17 +109,17 @@ def update_note(_note):
                                         "(для отмены оставьте поле пустым): ").strip().lower()
                     # Проверка на пустой ввод
                     if new_content != "":
-                        print("Описание изменено успешно")
+                        print(Fore.GREEN+"Описание изменено успешно")
                         _note["content"] = new_content
                         break
                     else:
-                        print("Описание не изменено.")
+                        print(Fore.BLUE+"Описание не изменено.")
 
                 elif last_choice == "нет":
-                    print("Вы отменили изменения")
+                    print(Fore.BLUE+"Вы отменили изменения")
                     break
                 else:
-                    print("Ошибка ввода (Допустимо: Да, Нет)")
+                    print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение статуса
         elif field in choice_field[6:8]:
             # Словарь значений статуса
@@ -135,22 +138,22 @@ def update_note(_note):
                     if new_status in choice_status.keys():
                         # Изменение и вывод нового статуса
                         _note["status"] = choice_status[new_status]
-                        print(f"Статус успешно обновлен на: {_note["status"]}")
+                        print(Fore.GREEN+f"Статус успешно обновлен на: {_note["status"]}")
                         break
                     # Проверка по значению(словам)
                     elif new_status in choice_status.values():
                         # Изменение и вывод нового статуса
                         _note["status"] = new_status
-                        print(f"Статус успешно обновлен на: {_note["status"]}")
+                        print(Fore.GREEN+f"Статус успешно обновлен на: {_note["status"]}")
                         break
                     else:
-                        print("Ошибка ввода (Допустимо: 1, 2, 3 или Выполнено, В процессе, Отложено)")
+                        print(Fore.RED+"Ошибка ввода (Допустимо: 1, 2, 3 или Выполнено, В процессе, Отложено)")
 
                 elif last_choice == "нет":
-                    print("Вы отменили изменения")
+                    print(Fore.BLUE+"Вы отменили изменения")
                     break
                 else:
-                    print("Ошибка ввода (Допустимо: Да, Нет)")
+                    print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение дедлайна
         elif field in choice_field[8:10]:
             while True:
@@ -168,24 +171,25 @@ def update_note(_note):
                         _note["issue_date"] = datetime(int(issue_date_input[2]),
                                                        int(issue_date_input[1]),
                                                        int(issue_date_input[0]))
+                        print(Fore.GREEN+"Дедлайн изменен успешно")
                         break
                     # Ловим исключения по значению и формату
                     except IndexError:
-                        print("Ошибка формата: Дата введена не день.месяц.год")
+                        print(Fore.RED+"Ошибка формата: Дата введена не день.месяц.год")
 
                     except ValueError:
-                        print("Ошибка значения: Были использованы не цифры или неверный формат дня, месяца, года")
+                        print(Fore.RED+"Ошибка значения: Были использованы не цифры или неверный формат дня, месяца, года")
                 elif last_choice == "нет":
-                    print("Вы отменили изменения")
+                    print(Fore.BLUE+"Вы отменили изменения")
                     break
                 else:
-                    print("Ошибка ввода (Допустимо: Да, Нет)")
+                    print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Выход
         elif field in choice_field[10:]:
             break
         # Обработка ошибки ввода
         else:
-            print("Ошибка ввода (Допустимо: 1, 2, 3, 4, 5 или"
+            print(Fore.RED+"Ошибка ввода (Допустимо: 1, 2, 3, 4, 5 или"
                   " Имя пользователя, Заголовки, Описание, Статус, Дата истечения)")
     # Возвращение словаря
     return _note
@@ -200,7 +204,7 @@ if __name__ == "__main__":
             'issue_date': datetime(2025, 2, 10)
             }
     # Вызов функций
-    output_notes(update_note(note))
+    output_note(update_note(note))
 
 
 
