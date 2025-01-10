@@ -9,15 +9,6 @@
 # Подключение формата даты
 from datetime import datetime
 
-# Пример готовой записки
-note = {'username': "роман",
-                  'titles': ["код", "правки"],
-                  'content': "исправить код",
-                  'status': "Отложено",
-                  'created_date': datetime.today(),
-                  'issue_date': datetime(2025,2,10)
-                  }
-
 # Функция вывода данных о заметке
 def output_notes(_note):
     # Создания словаря для вывода полей на русском
@@ -199,9 +190,18 @@ def update_note(_note):
     # Возвращение словаря
     return _note
 
+if __name__ == "__main__":
+    # Пример готовой записки
+    note = {'username': "роман",
+            'titles': ["код", "правки"],
+            'content': "исправить код",
+            'status': "Отложено",
+            'created_date': datetime.today(),
+            'issue_date': datetime(2025, 2, 10)
+            }
+    # Вызов функций
+    output_notes(update_note(note))
 
-# Вызов функций
-output_notes(update_note(note))
 
 
 
