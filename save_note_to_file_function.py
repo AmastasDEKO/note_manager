@@ -28,7 +28,7 @@ def save_note_to_file(notes, filename = "notes"):
             elif key == "created_date" or key == "issue_date":
                 splitting = str(value).split()
                 splitting = splitting[0].split(sep="-", maxsplit=-1)
-                file.writelines(f"{note_print[key]}: {'.'.join(splitting[:0:-1])}\n")
+                file.writelines(f"{note_print[key]}: {'.'.join(splitting[::-1])}\n")
             else:
                 file.writelines(f"{note_print[key]}: {value.capitalize()}\n")
         file.writelines("\n")
