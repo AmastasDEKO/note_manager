@@ -12,10 +12,10 @@ titles_input = set()
 
 # Цикл ввода заголовков
 while True:
-    title = input("Введите заголовок (для конца ввода оставьте поле пустым или введите \"стоп\"): ")
+    title = input("Введите заголовок (для конца ввода оставьте поле пустым или введите \"стоп\"): ").strip().lower()
 
     #Проверка на окончание ввода или добавление заголовка в множество
-    if title == "" or title == "стоп" or title == "Стоп":
+    if title == "" or title == "стоп":
         break
     else:
         titles_input.add(title)
@@ -24,5 +24,5 @@ while True:
 titles = list(titles_input)
 
 # Вывод списка заголовков
-print("Заголовки:", ", ".join(titles))
+print("Заголовки:", ", ".join(titles).title())
 
