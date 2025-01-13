@@ -57,8 +57,10 @@ def display_notes(_notes):
                      "3","сортировка по дате дедлайна",
                      "4","вывод в виде таблицы",
                      "5","без фильтров")
+    if _notes is None:
+        return
     # Проверка на наличие заметок
-    if len(_notes) == 0:
+    elif len(_notes) == 0:
         print(Fore.BLUE+"У вас нет сохранённых заметок")
         return
     # Цикл вывода
