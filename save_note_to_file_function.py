@@ -3,7 +3,7 @@ from datetime import datetime
 from colorama import init, Fore
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
-
+# Функция сохранения заметок в файле
 def save_note_to_file(notes, filename = "notes"):
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -38,8 +38,9 @@ def save_note_to_file(notes, filename = "notes"):
         print(Fore.GREEN+"Заметки сохранены успешно")
     else:
         print(Fore.RED+"Файл не был закрыт")
-
+# Основная часть кода
 if __name__ == "__main__":
+    # Создание списка с 5 заметками
     notes1 = [{
         "username": "анна",
         "titles": ["дом", "пылесос"],
@@ -92,5 +93,5 @@ if __name__ == "__main__":
         "created_date": datetime.today(),
         "issue_date": datetime(2025, 1, 12)
     }]
-
+    # Вызов функции
     save_note_to_file(notes1)
