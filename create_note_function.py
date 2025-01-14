@@ -106,30 +106,7 @@ def create_note():
         if auto_date == "да":
             # Отдельная переменная для "сегодня"
             today = datetime.today()
-            try:
-                new_note.update({"issue_date":datetime.replace(today,today.year,today.month,today.day+7)})
-            # Ловим исключения если дедлайн будет в следующем месяце
-            except ValueError:
-                # Для месяцев с 30 днями
-                if (today.day + 7) > 30:
-                    new_note.update({"issue_date":
-                         datetime.replace(today, today.year, today.month + 1, 31 - (today.day + 7))
-                        })
-                # Для месяцев с 31 днем
-                elif (today.day+ 7) > 31:
-                    new_note.update({"issue_date":
-                                     datetime.replace(today, today.year, today.month+1, 31 - (today.day + 7))
-                                    })
-                # Для февраля
-                elif (today.day+ 7) > 28:
-                    new_note.update({"issue_date":
-                                     datetime.replace(today, today.year, today.month+1, 28 - (today.day + 7))
-                                    })
-                # Для февраля (в високосный год)
-                elif (today.day+ 7) > 29:
-                    new_note.update({"issue_date":
-                                     datetime.replace(today, today.year, today.month+1, 29 - (today.day + 7))
-                                    })
+            new_note.update({"issue_date":datetime.replace(today,today.year,today.month,today.day+7)})
             break
         elif auto_date == "нет":
             while True:
