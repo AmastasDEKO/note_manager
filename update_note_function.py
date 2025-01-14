@@ -55,7 +55,7 @@ def update_note(_note):
                       "\n6. Выход"
                       "\nВвод: ").strip().lower()
         # Изменение имени пользователя
-        if field in choice_field[:2]:
+        if field in (choice_field[0] or choice_field[1]):
             while True:
                 last_choice = input("Вы точно хотите изменить имя пользователя?"
                                     " (Да/Нет)\nВвод: ").strip().lower()
@@ -76,7 +76,7 @@ def update_note(_note):
                 else:
                     print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение заголовков
-        elif field in choice_field[2:4]:
+        elif field in (choice_field[2] or choice_field[3]) :
             while True:
                 last_choice = input("Вы точно хотите изменить заголовки?"
                                     " (Да/Нет)\nВвод: ").strip().lower()
@@ -101,7 +101,7 @@ def update_note(_note):
                 else:
                     print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение описания
-        elif field in choice_field[4:6]:
+        elif field in (choice_field[4] or choice_field[5]):
             while True:
                 last_choice = input("Вы точно хотите изменить описание?"
                                     " (Да/Нет)\nВвод: ").strip().lower()
@@ -122,7 +122,7 @@ def update_note(_note):
                 else:
                     print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение статуса
-        elif field in choice_field[6:8]:
+        elif field in (choice_field[6] or choice_field[7]):
             # Словарь значений статуса
             choice_status = {"1": "выполнено",
                              "2": "в процессе",
@@ -145,7 +145,7 @@ def update_note(_note):
                     elif new_status in choice_status.values():
                         # Изменение и вывод нового статуса
                         _note["status"] = new_status
-                        print(Fore.GREEN+f"Статус успешно обновлен на: {_note["status"]}")
+                        print(Fore.GREEN+f"Статус успешно обновлен на: {_note["status"].capitalize()}")
                         break
                     else:
                         print(Fore.RED+"Ошибка ввода (Допустимо: 1, 2, 3 или Выполнено, В процессе, Отложено)")
@@ -156,7 +156,7 @@ def update_note(_note):
                 else:
                     print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Изменение дедлайна
-        elif field in choice_field[8:10]:
+        elif field in (choice_field[8] or choice_field[9]):
             while True:
                 last_choice = input("Вы точно хотите изменить дедлайн?"
                                     " (Да/Нет)\nВвод: ").strip().lower()
@@ -186,7 +186,7 @@ def update_note(_note):
                 else:
                     print(Fore.RED+"Ошибка ввода (Допустимо: Да, Нет)")
         # Выход
-        elif field in choice_field[10:]:
+        elif field in (choice_field[10] or choice_field[11]):
             break
         # Обработка ошибки ввода
         else:
