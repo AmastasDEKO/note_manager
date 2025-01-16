@@ -8,6 +8,7 @@
 # Подключение формата даты и цвет текста
 from datetime import datetime
 from colorama import init, Fore
+import json
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
@@ -28,33 +29,40 @@ def save_note_to_file(notes, filename = "notes"):
     elif len(notes) == 0:
         print(Fore.RED + "У вас нет заметок для сохранения")
         return
-    # Открытие файла на запись с кодировкой "utf-8"
-    file = open(f"{filename}.txt", "w", encoding="utf-8")
-    #Цикл перебора заметок
-    for i in range(len(notes)):
-        note = notes[i]
-        file.writelines(f"Заметка №{i + 1}\n")
-        # Цикл записи заметки в файл
-        for key, value in note.items():
-            if key == "titles":
-                file.writelines(f"{note_print[key]}: {", ".join(value).title()}\n")
-            elif key == "created_date" or key == "issue_date":
-                splitting = str(value).split()
-                splitting = splitting[0].split(sep="-", maxsplit=-1)
-                file.writelines(f"{note_print[key]}: {'.'.join(splitting[::-1])}\n")
+    try:
+        # Открытие файла на запись с кодировкой "utf-8"
+        with open(f"{filename}.json", "w", encoding="utf-8") as file:
+            notes_json = []
+            # Цикл перебора заметок
+            for i in range(len(notes)):
+                note = notes[i]
+                notes_json.append({
+                    note_print["username"]: note["username"],
+                    note_print["titles"]: note["titles"],
+                    note_print["content"]: note["content"],
+                    note_print["status"]: note["status"],
+                    note_print["created_date"]: str(note["created_date"]),
+                    note_print["issue_date"]: str(note["issue_date"])
+                })
+
+            # После выполнения цикла, закрываем файл
             else:
-                file.writelines(f"{note_print[key]}: {value.capitalize()}\n")
-        # Отступ между заметками
-        file.writelines("\n")
-    # После выполнения цикла, закрываем файл
-    else:
-        file.close()
+                json.dump(notes_json, file, indent=4, ensure_ascii=False)
+    except PermissionError:
+        print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
+        return
+    except OSError:
+        print("Файл не найден")
+        return
+
     # Проверка закрыт ли файл
     if file.closed:
-        print(Fore.GREEN+"Заметки сохранены успешно")
+        print(Fore.GREEN + "Заметки сохранены успешно")
     else:
-        print(Fore.RED+"Файл не был закрыт")
+        print(Fore.RED + "Файл не был закрыт")
         file.close()
+
+
 # Основная часть кода
 if __name__ == "__main__":
     # Создание списка с 5 заметками
