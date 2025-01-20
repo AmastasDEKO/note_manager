@@ -11,7 +11,7 @@
 from datetime import datetime
 import json
 from colorama import init, Fore
-from display_notes_function import display_notes
+from Stage3.display_notes_function import display_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
