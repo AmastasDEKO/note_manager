@@ -5,10 +5,11 @@
 Создать функцию save_notes_to_file(notes, filename), которая:
 Перезаписывает данные файла, записывая список заметок в текстовом формате YAML.
 """
+import json
 # Подключение формата даты и цвет текста
 from datetime import datetime
 from colorama import init, Fore
-import json
+import yaml
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
@@ -36,18 +37,19 @@ def save_note_to_file(notes, filename = "notes"):
             # Цикл перебора заметок
             for i in range(len(notes)):
                 note = notes[i]
+                # Создание одной заметки с новыми ключами
                 notes_json.append({
-                    note_print["username"]: note["username"],
-                    note_print["titles"]: note["titles"],
-                    note_print["content"]: note["content"],
-                    note_print["status"]: note["status"],
+                    note_print["username"]: note["username"].capitalize(),
+                    note_print["titles"]: ",".join(note["titles"]).title(),
+                    note_print["content"]: note["content"].capitalize(),
+                    note_print["status"]: note["status"].capitalize(),
                     note_print["created_date"]: str(note["created_date"]),
                     note_print["issue_date"]: str(note["issue_date"])
-                })
-
-            # После выполнения цикла, закрываем файл
+                    })
             else:
-                json.dump(notes_json, file, indent=4, ensure_ascii=False)
+                # Преобразовываем в формат yaml и записываем в файл json
+                file.write(json.dumps(notes_json, ensure_ascii=False, indent=4))
+
     except PermissionError:
         print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
         return
@@ -119,4 +121,4 @@ if __name__ == "__main__":
         "issue_date": datetime(2025, 1, 12)
     }]
     # Вызов функции
-    save_note_to_file(notes1)
+    save_note_to_file(notes1, filename="notes_text")
