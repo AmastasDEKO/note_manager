@@ -11,7 +11,7 @@ from colorama import init, Fore
 from create_note_function import create_note
 from update_note_function import  update_note
 from display_notes_function import display_notes
-from delete_note import delete_notes
+from Stage2.delete_note import delete_notes
 from search_notes_function import search_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
