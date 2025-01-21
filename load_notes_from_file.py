@@ -35,10 +35,10 @@ def load_notes_from_file(filename = "notes"):
                 # Цикл замены ключей в заметке
                 for key in note_for_true_key.keys():
                     for key1 in notes[i].keys():
-                        if note_for_true_key[key] == key1 and key1 != "Дата создания" and key1 != "Дедлайн":
-                            note[key] = note.pop(key1)
-                        elif note_for_true_key[key] == key1 and (key1 == "Дата создания" or key1 == "Дедлайн"):
+                        if note_for_true_key[key] == key1 and (key1 == "Дата создания" or key1 == "Дедлайн"):
                             note[key] = datetime.fromisoformat(note.pop(key1))
+                        elif note_for_true_key[key] == key1:
+                            note[key] = note.pop(key1)
                 notes[i] = note
     # Ошибка прав доступа
     except PermissionError:
@@ -58,5 +58,5 @@ def load_notes_from_file(filename = "notes"):
 # Основная часть кода
 if __name__ == "__main__":
     # Вызов функции
-    notes_from_file = load_notes_from_file()
+    notes_from_file = load_notes_from_file(filename="notes_text")
     display_notes(notes_from_file)
