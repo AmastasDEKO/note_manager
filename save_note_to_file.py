@@ -39,10 +39,10 @@ def save_note_to_file(notes, filename = "notes"):
                 note = notes[i]
                 # Создание одной заметки с новыми ключами
                 notes_json.append({
-                    note_print["username"]: note["username"].capitalize(),
-                    note_print["titles"]: ",".join(note["titles"]).title(),
-                    note_print["content"]: note["content"].capitalize(),
-                    note_print["status"]: note["status"].capitalize(),
+                    note_print["username"]: note["username"],
+                    note_print["titles"]: note["titles"],
+                    note_print["content"]: note["content"],
+                    note_print["status"]: note["status"],
                     note_print["created_date"]: str(note["created_date"]),
                     note_print["issue_date"]: str(note["issue_date"])
                     })
