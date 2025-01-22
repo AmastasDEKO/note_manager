@@ -15,8 +15,6 @@ file_error_handling.py
 # Подключение формата даты, цвет текста, json и функции вывода
 import json
 from datetime import datetime
-from turtledemo.sorting_animate import enable_keys
-
 from colorama import init, Fore
 from Stage3.display_notes_function import display_notes
 import yaml
