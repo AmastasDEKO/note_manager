@@ -1,20 +1,20 @@
 """
 2. Загрузка заметок из файла
-Файл: load_notes_from_file.py
+load_notes_from_file.py
 Описание задачи:
-Создать функцию load_notes_from_file(filename), которая:
-Читает заметки из текстового файла в формате YAML.
-Преобразует данные в список словарей.
-
+    Создать функцию load_notes_from_file(filename), которая:
+    Читает заметки из текстового файла в формате YAML.
+    Преобразует данные в список словарей.
 """
-# Подключение формата даты, цвет текста, json и функции вывода
+
+# Подключение формата даты, цвет текста, json и функции ввода
 from datetime import datetime
 import json
 from colorama import init, Fore
 from Stage3.display_notes_function import display_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
-# Функция сохранения заметок в файле
+# Функция загрузки заметок из файла в список
 def load_notes_from_file(filename = "notes"):
     # Словарь для замены ключей
     note_for_true_key = {'username': "Имя пользователя",
@@ -26,7 +26,7 @@ def load_notes_from_file(filename = "notes"):
                         }
     # Ловим ошибки при открытии файла
     try:
-        with open(f"{filename}.json", encoding="utf-8") as file:
+        with open(f"{filename}.json","r", encoding="utf-8") as file:
             # Выгружаем список
             notes = json.load(file)
             # Цикл перебора заметок
@@ -42,21 +42,62 @@ def load_notes_from_file(filename = "notes"):
                 notes[i] = note
     # Ошибка прав доступа
     except PermissionError:
-        print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
+        print(Fore.RED +"Ошибка доступа, недостаточно прав, чтобы открыть файл")
         return
-    # Ошибка в названии файла
+    # Файл не найден
+    except FileNotFoundError:
+        print(Fore.RED +"Файл не найден")
+        while True:
+            create_file = input(f"Хотите создать файл с именем {filename}.json? "
+                                f"(Да/Нет) Ввод: ").strip().lower()
+            if create_file == "да":
+                file_new = open(f"{filename}.json","w", encoding="utf-8")
+                file_new.close()
+                print("Файл создан")
+                return
+            elif create_file == "нет":
+                return
+            else:
+                print(Fore.RED + "Ошибка ввода (Допустимо: Да, Нет)")
+    # Ошибка в имени файла
     except OSError:
-        print("Файл не найден")
-        return
-    # Проверка закрыт ли файл
-    if file.closed:
-        print(Fore.GREEN+"Заметки успешно записаны в список")
-        #Возвращает список
-        return notes
-    else:
-        print(Fore.RED+"Файл не был закрыт")
+        print(Fore.RED +"Имя файла некорректно")
+        filename_new = input("Введите имя файла ещё раз: ").strip()
+        return load_notes_from_file(filename_new)
+    # Файл повреждён или пуст
+    except ValueError:
+        print(Fore.RED +"Файл повреждён или пуст")
+        while True:
+            create_file = input(f"Хотите очистить файл с именем {filename}.json?"
+                                f" (Да/Нет) Ввод: ").strip().lower()
+            if create_file == "да":
+                with open(f"{filename}.json", "w+", encoding="utf-8") as file_new:
+                    file_new.truncate(0)
+                    print("Файл очищен")
+                return
+            elif create_file == "нет":
+                return
+            else:
+                print(Fore.RED + "Ошибка ввода (Допустимо: Да, Нет)")
+
+    print(Fore.GREEN+"Заметки успешно записаны в список")
+    #Возвращает список
+    return notes
 # Основная часть кода
 if __name__ == "__main__":
-    # Вызов функции
-    notes_from_file = load_notes_from_file(filename="notes_text")
+    # Цикл ввода названия файла
+    while True:
+        count = 0
+        filename_load = input("Введите имя файла для загрузки "
+                              "(для перехода в другую папку используйте двойной \\: ").strip()
+        for char in filename_load:
+            if char == "\\":
+                count += 1
+        else:
+            if count % 2 != 0:
+                print("Для ввода \\ вам нужно вести двойной \\")
+            else:
+                break
+    # Вызов функций
+    notes_from_file = load_notes_from_file(filename_load)
     display_notes(notes_from_file)
