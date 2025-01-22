@@ -1,15 +1,15 @@
 """
 1. Сохранение заметок в файл
-Файл: save_note_json.py
+save_note_json.py
 Описание задачи:
-Создать функцию save_notes_to_file(notes, filename), которая:
-Перезаписывает данные файла, записывая список заметок в текстовом формате YAML.
+    Создать функцию save_notes_to_file(notes, filename), которая:
+    Перезаписывает данные файла, записывая список заметок в текстовом формате JSON.
 """
-import json
-# Подключение формата даты и цвет текста
+
+# Подключение формата даты и цвет текста и json
 from datetime import datetime
 from colorama import init, Fore
-import yaml
+import json
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
@@ -49,21 +49,17 @@ def save_note_to_file(notes, filename = "notes"):
             else:
                 # Преобразовываем в формат yaml и записываем в файл json
                 file.write(json.dumps(notes_json, ensure_ascii=False, indent=4))
-
+    # Ошибка прав доступа
     except PermissionError:
         print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
         return
+    # Ошибка в имени файла
     except OSError:
-        print("Файл не найден")
-        return
+        print("Имя файла некорректно")
+        filename_new = input("Введите имя файла ещё раз: ").strip()
+        return save_note_to_file(notes, filename_new)
 
-    # Проверка закрыт ли файл
-    if file.closed:
-        print(Fore.GREEN + "Заметки сохранены успешно")
-    else:
-        print(Fore.RED + "Файл не был закрыт")
-        file.close()
-
+    print(Fore.GREEN + "Заметки сохранены успешно")
 
 # Основная часть кода
 if __name__ == "__main__":
@@ -120,5 +116,23 @@ if __name__ == "__main__":
         "created_date": datetime.today(),
         "issue_date": datetime(2025, 1, 12)
     }]
+    # Цикл ввода названия файла
+    while True:
+        count = 0
+        filename_save = input("Введите имя файла для сохранения "
+                              "(для перехода в другую папку используйте двойной \\: ").strip()
+        for char in filename_save:
+            if char == "\\":
+                count += 1
+        else:
+            if count % 2 != 0:
+                print("Для ввода \\ вам нужно вести двойной \\")
+            else:
+                break
     # Вызов функции
-    save_note_to_file(notes1, filename="notes_text")
+    save_note_to_file(notes1, filename_save)
+
+
+
+
+
