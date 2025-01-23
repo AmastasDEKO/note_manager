@@ -1,9 +1,10 @@
 """
-1. Сохранение заметок в файл
-Файл: save_note_json.py
+5. Выбор формата файла
+save_notes_json.py
 Описание задачи:
-Создать функцию save_notes_to_json(notes, filename), которая:
-Перезаписывает данные файла, записывая список заметок в текстовом формате YAML.
+    Создать функцию save_notes_to_json(notes, filename), которая:
+        Перезаписывает данные файла, записывая список заметок в структуре JSON.
+        Данные сохраняются в удобочитаемом формате (с отступами).
 """
 # Подключение формата даты и цвет текста
 from datetime import datetime
@@ -12,7 +13,7 @@ import json
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
-def save_note_to_file(notes, filename = "notes"):
+def save_notes_json(notes, filename = "notes"):
     # Словарь значений полей.
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -52,8 +53,9 @@ def save_note_to_file(notes, filename = "notes"):
         print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
         return
     except OSError:
-        print("Файл не найден")
-        return
+        print("Имя файла некорректно")
+        filename_new = input("Введите имя файла ещё раз: ").strip()
+        return save_notes_json(notes, filename_new)
 
     # Проверка закрыт ли файл
     if file.closed:
