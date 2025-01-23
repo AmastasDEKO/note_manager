@@ -3,8 +3,8 @@
 load_notes_from_file.py
 Описание задачи:
     Создать функцию load_notes_from_file(filename), которая:
-    Читает заметки из текстового файла в формате YAML.
-    Преобразует данные в список словарей.
+        Читает заметки из текстового файла в формате YAML.
+        Преобразует данные в список словарей.
 """
 
 # Подключение формата даты, цвет текста, json и функции ввода
@@ -15,7 +15,7 @@ from Stage3.display_notes_function import display_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция загрузки заметок из файла в список
-def load_notes_from_file(filename = "notes"):
+def load_notes_from_file(filename):
     # Словарь для замены ключей
     note_for_true_key = {'username': "Имя пользователя",
                          'titles': "Заголовки",
@@ -26,7 +26,7 @@ def load_notes_from_file(filename = "notes"):
                         }
     # Ловим ошибки при открытии файла
     try:
-        with open(f"{filename}.json","r", encoding="utf-8") as file:
+        with open(filename,"r", encoding="utf-8") as file:
             # Выгружаем список
             notes = json.load(file)
             # Цикл перебора заметок
@@ -48,10 +48,10 @@ def load_notes_from_file(filename = "notes"):
     except FileNotFoundError:
         print(Fore.RED +"Файл не найден")
         while True:
-            create_file = input(f"Хотите создать файл с именем {filename}.json? "
+            create_file = input(f"Хотите создать файл с именем {filename}? "
                                 f"(Да/Нет) Ввод: ").strip().lower()
             if create_file == "да":
-                file_new = open(f"{filename}.json","w", encoding="utf-8")
+                file_new = open(filename,"w", encoding="utf-8")
                 file_new.close()
                 print("Файл создан")
                 return
@@ -68,10 +68,10 @@ def load_notes_from_file(filename = "notes"):
     except ValueError:
         print(Fore.RED +"Файл повреждён или пуст")
         while True:
-            create_file = input(f"Хотите очистить файл с именем {filename}.json?"
+            create_file = input(f"Хотите очистить файл с именем {filename}?"
                                 f" (Да/Нет) Ввод: ").strip().lower()
             if create_file == "да":
-                with open(f"{filename}.json", "w+", encoding="utf-8") as file_new:
+                with open(filename, "w+", encoding="utf-8") as file_new:
                     file_new.truncate(0)
                     print("Файл очищен")
                 return
