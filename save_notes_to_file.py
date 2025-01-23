@@ -1,6 +1,6 @@
 """
 1. Сохранение заметок в файл
-save_note_json.py
+save_notes_to_file.py
 Описание задачи:
     Создать функцию save_notes_to_file(notes, filename), которая:
     Перезаписывает данные файла, записывая список заметок в текстовом формате JSON.
@@ -13,7 +13,7 @@ import json
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
-def save_note_to_file(notes, filename = "notes"):
+def save_notes_to_file(notes, filename):
     # Словарь значений полей.
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -32,7 +32,7 @@ def save_note_to_file(notes, filename = "notes"):
         return
     try:
         # Открытие файла на запись с кодировкой "utf-8"
-        with open(f"{filename}.json", "w", encoding="utf-8") as file:
+        with open(filename, "w", encoding="utf-8") as file:
             notes_json = []
             # Цикл перебора заметок
             for i in range(len(notes)):
@@ -47,7 +47,8 @@ def save_note_to_file(notes, filename = "notes"):
                     note_print["issue_date"]: str(note["issue_date"])
                     })
             else:
-                # Преобразовываем в формат yaml и записываем в файл json
+
+                # Преобразовываем в формат str и записываем в файл json
                 file.write(json.dumps(notes_json, ensure_ascii=False, indent=4))
     # Ошибка прав доступа
     except PermissionError:
@@ -57,7 +58,7 @@ def save_note_to_file(notes, filename = "notes"):
     except OSError:
         print("Имя файла некорректно")
         filename_new = input("Введите имя файла ещё раз: ").strip()
-        return save_note_to_file(notes, filename_new)
+        return save_notes_to_file(notes, filename_new)
 
     print(Fore.GREEN + "Заметки сохранены успешно")
 
@@ -130,7 +131,7 @@ if __name__ == "__main__":
             else:
                 break
     # Вызов функции
-    save_note_to_file(notes1, filename_save)
+    save_notes_to_file(notes1, filename_save)
 
 
 
