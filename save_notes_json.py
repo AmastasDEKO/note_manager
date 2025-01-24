@@ -121,4 +121,4 @@ if __name__ == "__main__":
         "issue_date": datetime(2025, 1, 12)
     }]
     # Вызов функции
-    save_note_to_file(notes1)
+    save_notes_json(notes1)
