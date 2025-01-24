@@ -26,27 +26,46 @@ def load_notes_from_file(filename):
                         }
     # Ловим ошибки при открытии файла
     try:
-        with open(filename,"r", encoding="utf-8") as file:
-            # Выгружаем список
-            notes_from_file = file.readlines()
-            notes = []
-            note = {}
-            # Цикл перебора заметок
-            for i in range(len(notes_from_file)):
-                note_line = notes_from_file[i]
-                # Цикл замены ключей в заметке
-                if note_line != "\n":
-                    for key, value in note_for_true_key.items():
-                        if value in note_line and ("Дата создания" == value or "Дедлайн" == value):
-                            note.update({key:datetime.fromisoformat(note_line[len(value) +2 :len(note_line) - 1])})
-                        elif value in note_line and "Заголовки" == value:
-                            note.update({key:note_line[len(value) + 2:len(note_line) - 1].lower().split(sep=", ")})
+        # Проверка файла на формат json
+        if "json" in filename:
+            with open(filename, "r", encoding="utf-8") as file:
+                # Выгружаем список
+                notes = json.load(file)
+                # Цикл перебора заметок
+                for i in range(len(notes)):
+                    note = notes[i].copy()
+                    # Цикл замены ключей в заметке
+                    for key in note_for_true_key.keys():
+                        for key1 in notes[i].keys():
+                            if note_for_true_key[key] == key1 and (key1 == "Дата создания" or key1 == "Дедлайн"):
+                                note[key] = datetime.fromisoformat(note.pop(key1))
+                            elif note_for_true_key[key] == key1:
+                                note[key] = note.pop(key1)
+                    notes[i] = note
+        else:
+            with open(filename, "r", encoding="utf-8") as file:
+                # Выгружаем список
+                notes_from_file = file.readlines()
+                notes = []
+                note = {}
+                # Цикл перебора строк файла
+                for i in range(len(notes_from_file)):
+                    note_line = notes_from_file[i]
+                    # Проверяем на конец одной заметки
+                    if note_line != "\n":
+                        # Замена ключей в заметке
+                        for key, value in note_for_true_key.items():
+                            if value in note_line and ("Дата создания" == value or "Дедлайн" == value):
+                                note.update({key: datetime.fromisoformat(note_line[len(value) + 2:len(note_line) - 1])})
+                            elif value in note_line and "Заголовки" == value:
+                                note.update({key: note_line[len(value) + 2:len(note_line) - 1].lower().split(sep=", ")})
+                            elif value in note_line:
+                                note.update({key: note_line[len(value) + 2:len(note_line) - 1].lower()})
+                    else:
+                        # Добавляем в список и переопределяем переменную note
+                        notes.append(note)
+                        note = {}
 
-                        elif value in note_line:
-                            note.update({key: note_line[len(value) + 2:len(note_line) - 1].lower()})
-                else:
-                    notes.append(note)
-                    note = {}
     # Ошибка прав доступа
     except PermissionError:
         print(Fore.RED +"Ошибка доступа, недостаточно прав, чтобы открыть файл")
