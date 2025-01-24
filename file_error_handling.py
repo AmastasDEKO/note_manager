@@ -21,7 +21,7 @@ import yaml
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
-def save_note_to_file(notes, filename = "notes"):
+def save_notes_to_file(notes, filename):
     # Словарь значений полей.
     note_print = {'username': "Имя пользователя",
                   'titles': "Заголовки",
@@ -40,23 +40,18 @@ def save_note_to_file(notes, filename = "notes"):
         return
     try:
         # Открытие файла на запись с кодировкой "utf-8"
-        with open(f"{filename}.json", "w", encoding="utf-8") as file:
-            notes_json = []
+        with open(filename, "w", encoding="utf-8") as file:
             # Цикл перебора заметок
-            for i in range(len(notes)):
-                note = notes[i]
-                # Создание одной заметки с новыми ключами
-                notes_json.append({
-                    note_print["username"]: note["username"],
-                    note_print["titles"]: note["titles"],
-                    note_print["content"]: note["content"],
-                    note_print["status"]: note["status"],
-                    note_print["created_date"]: str(note["created_date"]),
-                    note_print["issue_date"]: str(note["issue_date"])
-                    })
-            else:
-                # Преобразовываем в формат yaml и записываем в файл json
-                file.write(json.dumps(notes_json, ensure_ascii=False, indent=4))
+            for note in notes:
+                # Запись одной заметки с новыми ключами
+                file.write(f'{note_print["username"]}: {note["username"].capitalize()}\n')
+                file.write(f'{note_print["titles"]}: {", ".join(note["titles"]).title()}\n')
+                file.write(f'{note_print["content"]}: {note["content"]}\n')
+                file.write(f'{note_print["status"]}: {note["status"]}\n')
+                file.write(f'{note_print["created_date"]}: {str(note["created_date"])}\n')
+                file.write(f'{note_print["issue_date"]}: {str(note["issue_date"])}\n')
+                file.write("\n")
+
     # Ошибка прав доступа
     except PermissionError:
         print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
@@ -65,11 +60,11 @@ def save_note_to_file(notes, filename = "notes"):
     except OSError:
         print("Имя файла некорректно")
         filename_new = input("Введите имя файла ещё раз: ").strip()
-        return save_note_to_file(notes, filename_new)
+        return save_notes_to_file(notes, filename_new)
 
     print(Fore.GREEN + "Заметки сохранены успешно")
 # Функция загрузки заметок из файла в список
-def load_notes_from_file(filename = "notes"):
+def load_notes_from_file(filename):
     # Словарь для замены ключей
     note_for_true_key = {'username': "Имя пользователя",
                          'titles': "Заголовки",
@@ -80,20 +75,46 @@ def load_notes_from_file(filename = "notes"):
                         }
     # Ловим ошибки при открытии файла
     try:
-        with open(f"{filename}.json","r", encoding="utf-8") as file:
-            # Выгружаем список
-            notes = json.load(file)
-            # Цикл перебора заметок
-            for i in range(len(notes)):
-                note = notes[i].copy()
-                # Цикл замены ключей в заметке
-                for key in note_for_true_key.keys():
-                    for key1 in notes[i].keys():
-                        if note_for_true_key[key] == key1 and (key1 == "Дата создания" or key1 == "Дедлайн"):
-                            note[key] = datetime.fromisoformat(note.pop(key1))
-                        elif note_for_true_key[key] == key1:
-                            note[key] = note.pop(key1)
-                notes[i] = note
+        # Проверка файла на формат json
+        if "json" in filename:
+            with open(filename, "r", encoding="utf-8") as file:
+                # Выгружаем список
+                notes = json.load(file)
+                # Цикл перебора заметок
+                for i in range(len(notes)):
+                    note = notes[i].copy()
+                    # Цикл замены ключей в заметке
+                    for key in note_for_true_key.keys():
+                        for key1 in notes[i].keys():
+                            if note_for_true_key[key] == key1 and (key1 == "Дата создания" or key1 == "Дедлайн"):
+                                note[key] = datetime.fromisoformat(note.pop(key1))
+                            elif note_for_true_key[key] == key1:
+                                note[key] = note.pop(key1)
+                    notes[i] = note
+        else:
+            with open(filename, "r", encoding="utf-8") as file:
+                # Выгружаем список
+                notes_from_file = file.readlines()
+                notes = []
+                note = {}
+                # Цикл перебора строк файла
+                for i in range(len(notes_from_file)):
+                    note_line = notes_from_file[i]
+                    # Проверяем на конец одной заметки
+                    if note_line != "\n":
+                        # Замена ключей в заметке
+                        for key, value in note_for_true_key.items():
+                            if value in note_line and ("Дата создания" == value or "Дедлайн" == value):
+                                note.update({key: datetime.fromisoformat(note_line[len(value) + 2:len(note_line) - 1])})
+                            elif value in note_line and "Заголовки" == value:
+                                note.update({key: note_line[len(value) + 2:len(note_line) - 1].lower().split(sep=", ")})
+                            elif value in note_line:
+                                note.update({key: note_line[len(value) + 2:len(note_line) - 1].lower()})
+                    else:
+                        # Добавляем в список и переопределяем переменную note
+                        notes.append(note)
+                        note = {}
+
     # Ошибка прав доступа
     except PermissionError:
         print(Fore.RED +"Ошибка доступа, недостаточно прав, чтобы открыть файл")
@@ -102,10 +123,10 @@ def load_notes_from_file(filename = "notes"):
     except FileNotFoundError:
         print(Fore.RED +"Файл не найден")
         while True:
-            create_file = input(f"Хотите создать файл с именем {filename}.json? "
+            create_file = input(f"Хотите создать файл с именем {filename}? "
                                 f"(Да/Нет) Ввод: ").strip().lower()
             if create_file == "да":
-                file_new = open(f"{filename}.json","w", encoding="utf-8")
+                file_new = open(filename,"w", encoding="utf-8")
                 file_new.close()
                 print("Файл создан")
                 return
@@ -122,10 +143,10 @@ def load_notes_from_file(filename = "notes"):
     except ValueError:
         print(Fore.RED +"Файл повреждён или пуст")
         while True:
-            create_file = input(f"Хотите очистить файл с именем {filename}.json?"
+            create_file = input(f"Хотите очистить файл с именем {filename}?"
                                 f" (Да/Нет) Ввод: ").strip().lower()
             if create_file == "да":
-                with open(f"{filename}.json", "w+", encoding="utf-8") as file_new:
+                with open(filename, "w+", encoding="utf-8") as file_new:
                     file_new.truncate(0)
                     print("Файл очищен")
                 return
@@ -195,7 +216,7 @@ if __name__ == "__main__":
             else:
                 break
     # Вызов функции
-    save_note_to_file(notes1, filename_save)
+    save_notes_to_file(notes1, filename_save)
     # Цикл ввода названия файла
     while True:
         count = 0
