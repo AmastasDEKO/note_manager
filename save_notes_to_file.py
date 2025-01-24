@@ -33,23 +33,17 @@ def save_notes_to_file(notes, filename):
     try:
         # Открытие файла на запись с кодировкой "utf-8"
         with open(filename, "w", encoding="utf-8") as file:
-            notes_json = []
             # Цикл перебора заметок
-            for i in range(len(notes)):
-                note = notes[i]
-                # Создание одной заметки с новыми ключами
-                notes_json.append({
-                    note_print["username"]: note["username"],
-                    note_print["titles"]: note["titles"],
-                    note_print["content"]: note["content"],
-                    note_print["status"]: note["status"],
-                    note_print["created_date"]: str(note["created_date"]),
-                    note_print["issue_date"]: str(note["issue_date"])
-                    })
-            else:
+            for note in notes:
+                # Запись одной заметки с новыми ключами
+                file.write(f'{note_print["username"]}: {note["username"].capitalize()}\n')
+                file.write(f'{note_print["titles"]}: {", ".join(note["titles"]).title()}\n')
+                file.write(f'{note_print["content"]}: {note["content"]}\n')
+                file.write(f'{note_print["status"]}: {note["status"]}\n')
+                file.write(f'{note_print["created_date"]}: {str(note["created_date"])}\n')
+                file.write(f'{note_print["issue_date"]}: {str(note["issue_date"])}\n')
+                file.write("\n")
 
-                # Преобразовываем в формат str и записываем в файл json
-                file.write(json.dumps(notes_json, ensure_ascii=False, indent=4))
     # Ошибка прав доступа
     except PermissionError:
         print("Ошибка доступа, недостаточно прав, чтобы открыть файл")
