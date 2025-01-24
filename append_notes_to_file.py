@@ -31,27 +31,42 @@ def append_notes_to_file(notes, filename):
     elif len(notes) == 0:
         print(Fore.RED + "У вас нет заметок для сохранения")
         return
+
     try:
-        # Открытие файла на запись и чтение с кодировкой "utf-8"
-        with open(filename, "r", encoding="utf-8") as file:
-            notes_json = json.load(file)
-            # Цикл перебора заметок
-            for i in range(len(notes)):
-                note = notes[i]
-                # Создание одной заметки с новыми ключами
-                notes_json.append({
-                    note_print["username"]: note["username"],
-                    note_print["titles"]: note["titles"],
-                    note_print["content"]: note["content"],
-                    note_print["status"]: note["status"],
-                    note_print["created_date"]: str(note["created_date"]),
-                    note_print["issue_date"]: str(note["issue_date"])
+        # Проверка файла на формат json
+        if "json" in filename:
+            # Открытие файла на запись и чтение с кодировкой "utf-8"
+            with open(filename, "r", encoding="utf-8") as file:
+                notes_json = json.load(file)
+                # Цикл перебора заметок
+                for i in range(len(notes)):
+                    note = notes[i]
+                    # Создание одной заметки с новыми ключами
+                    notes_json.append({
+                        note_print["username"]: note["username"],
+                        note_print["titles"]: note["titles"],
+                        note_print["content"]: note["content"],
+                        note_print["status"]: note["status"],
+                        note_print["created_date"]: str(note["created_date"]),
+                        note_print["issue_date"]: str(note["issue_date"])
                     })
 
-        with open(filename, "w", encoding="utf-8") as file:
-            data = json.dumps(notes_json, ensure_ascii=False, indent=4)
-            file.write(data)
-
+            with open(filename, "w", encoding="utf-8") as file:
+                data = json.dumps(notes_json, ensure_ascii=False, indent=4)
+                file.write(data)
+        else:
+            # Открытие файла на добавление с кодировкой "utf-8"
+            with open(filename, "a", encoding="utf-8") as file:
+                # Цикл перебора заметок
+                for note in notes:
+                    # Запись одной заметки с новыми ключами
+                    file.write(f'{note_print["username"]}: {note["username"].capitalize()}\n')
+                    file.write(f'{note_print["titles"]}: {", ".join(note["titles"]).title()}\n')
+                    file.write(f'{note_print["content"]}: {note["content"]}\n')
+                    file.write(f'{note_print["status"]}: {note["status"]}\n')
+                    file.write(f'{note_print["created_date"]}: {str(note["created_date"])}\n')
+                    file.write(f'{note_print["issue_date"]}: {str(note["issue_date"])}\n')
+                    file.write("\n")
     # Ошибка прав доступа
     except PermissionError:
         print(Fore.RED + "Ошибка доступа, недостаточно прав, чтобы открыть файл")
