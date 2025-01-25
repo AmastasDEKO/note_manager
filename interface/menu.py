@@ -9,10 +9,10 @@
 from datetime import datetime
 from colorama import init, Fore
 from utils.create_note_function import create_note
-from update_note_function import  update_note
+from utils.update_note_function import update_note
 from interface.display_notes_function import display_notes
 from utils.delete_note import delete_notes
-from search_notes_function import search_notes
+from utils.search_notes_function import search_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Создание списка заметок с содержимым
