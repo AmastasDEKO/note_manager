@@ -70,7 +70,7 @@ def delete_notes(_notes):
                                              f"{", ".join(note["titles"]).title()} (Да/Нет)\nВвод: ").strip().lower()
                         if last_choice == "да":
                             # Если согласились, удаляем, выводим сообщение и завершаем цикл
-                            new_notes.pop(i)
+                            new_notes.remove(note)
                             print(Fore.GREEN + "Успешно удалено")
                             break
                         elif last_choice == "нет":
@@ -88,7 +88,7 @@ def delete_notes(_notes):
                                             f"{note["username"].capitalize()}(Да/Нет)\nВвод: ").strip().lower()
                         if last_choice == "да":
                             # Если согласились, удаляем, выводим сообщение и завершаем цикл
-                            new_notes.pop(i)
+                            new_notes.remove(note)
                             print(Fore.GREEN + "Успешно удалено")
                             break
 
