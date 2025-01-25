@@ -16,7 +16,7 @@ file_error_handling.py
 import json
 from datetime import datetime
 from colorama import init, Fore
-from interface.display_notes_function import display_notes
+from interface import display_notes
 
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)

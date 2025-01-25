@@ -11,7 +11,7 @@ load_notes_from_file.py
 from datetime import datetime
 import json
 from colorama import init, Fore
-from interface.display_notes_function import display_notes
+from interface import display_notes
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция загрузки заметок из файла в список
