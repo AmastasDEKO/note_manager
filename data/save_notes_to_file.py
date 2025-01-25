@@ -9,7 +9,6 @@ save_notes_to_file.py
 # Подключение формата даты и цвет текста и json
 from datetime import datetime
 from colorama import init, Fore
-import json
 # Определение автоматического сбрасывания настроек цвета текста
 init(autoreset=True)
 # Функция сохранения заметок в файле
