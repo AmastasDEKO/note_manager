@@ -34,7 +34,7 @@ def append_notes_to_file(notes, filename):
 
     try:
         # Проверка файла на формат json
-        if "json" in filename:
+        if ".json" in filename:
             # Открытие файла на запись и чтение с кодировкой "utf-8"
             with open(filename, "r", encoding="utf-8") as file:
                 notes_json = json.load(file)
