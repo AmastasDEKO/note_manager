@@ -27,7 +27,7 @@ def load_notes_from_file(filename):
     # Ловим ошибки при открытии файла
     try:
         # Проверка файла на формат json
-        if "json" in filename:
+        if ".json" in filename:
             with open(filename, "r", encoding="utf-8") as file:
                 # Выгружаем список
                 notes = json.load(file)
@@ -46,6 +46,9 @@ def load_notes_from_file(filename):
             with open(filename, "r", encoding="utf-8") as file:
                 # Выгружаем список
                 notes_from_file = file.readlines()
+                if len(notes_from_file) == 0:
+                    print(Fore.BLUE+"Файл пуст")
+                    return
                 notes = []
                 note = {}
                 # Цикл перебора строк файла
